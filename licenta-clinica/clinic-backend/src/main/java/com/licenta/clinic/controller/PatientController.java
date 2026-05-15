@@ -67,4 +67,40 @@ public class PatientController {
 
         return patientRepository.save(patient);
     }
+
+    @PutMapping("/{id}")
+    public Patient updatePatient(
+            @PathVariable String id,
+            @RequestBody Patient updatedPatient
+    ) {
+        patientRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Patient not found"));
+
+        Patient newPatient = new Patient(
+                updatedPatient.getDoctorId(),
+                updatedPatient.getFirstName(),
+                updatedPatient.getLastName(),
+                updatedPatient.getEmail(),
+                updatedPatient.getPhone(),
+                updatedPatient.getAge(),
+                updatedPatient.getGender(),
+                updatedPatient.getAddress(),
+                updatedPatient.getMedicalHistory()
+        );
+
+        try {
+            java.lang.reflect.Field idField = Patient.class.getDeclaredField("id");
+            idField.setAccessible(true);
+            idField.set(newPatient, id);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return patientRepository.save(newPatient);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deletePatient(@PathVariable String id) {
+        patientRepository.deleteById(id);
+    }
 }

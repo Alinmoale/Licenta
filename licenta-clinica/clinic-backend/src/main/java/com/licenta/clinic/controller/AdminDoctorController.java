@@ -53,4 +53,34 @@ public class AdminDoctorController {
     public List<Doctor> getAllDoctors() {
         return doctorRepository.findAll();
     }
+
+    @PutMapping("/{id}")
+    public Doctor updateDoctor(@PathVariable String id, @RequestBody Doctor updatedDoctor) {
+        Doctor doctor = doctorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Doctor not found"));
+
+        Doctor newDoctor = new Doctor(
+                doctor.getUserId(),
+                updatedDoctor.getFirstName(),
+                updatedDoctor.getLastName(),
+                updatedDoctor.getEmail(),
+                updatedDoctor.getPhone(),
+                updatedDoctor.getSpecialization()
+        );
+
+        try {
+            java.lang.reflect.Field idField = Doctor.class.getDeclaredField("id");
+            idField.setAccessible(true);
+            idField.set(newDoctor, id);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return doctorRepository.save(newDoctor);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteDoctor(@PathVariable String id) {
+        doctorRepository.deleteById(id);
+    }
 }
