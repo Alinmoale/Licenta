@@ -1,1 +1,110 @@
-<p>patients works!</p>
+<app-sidebar></app-sidebar>
+
+<main class="main-content">
+
+  <div class="page">
+
+    <h1>Patients</h1>
+    <p>Manage clinic patients</p>
+
+    <div class="content-grid">
+
+      <section class="form-card">
+
+        <h2>
+          {{ editingPatientId ? 'Edit Patient' : 'Add Patient' }}
+        </h2>
+
+        <select [(ngModel)]="form.doctorId">
+          <option value="">Select doctor</option>
+
+          <option
+            *ngFor="let doctor of doctors"
+            [value]="doctor.id"
+          >
+            {{ doctor.firstName }} {{ doctor.lastName }}
+          </option>
+        </select>
+
+        <input placeholder="First name" [(ngModel)]="form.firstName">
+        <input placeholder="Last name" [(ngModel)]="form.lastName">
+        <input placeholder="Email" [(ngModel)]="form.email">
+        <input placeholder="Phone" [(ngModel)]="form.phone">
+
+        <input type="number" placeholder="Age" [(ngModel)]="form.age">
+
+        <input placeholder="Gender" [(ngModel)]="form.gender">
+        <input placeholder="Address" [(ngModel)]="form.address">
+
+        <textarea
+          placeholder="Medical history"
+          [(ngModel)]="form.medicalHistory"
+        ></textarea>
+
+        <button (click)="savePatient()">
+          {{ editingPatientId ? 'Update Patient' : 'Save Patient' }}
+        </button>
+
+      </section>
+
+      <section class="table-card">
+
+        <h2>Patients List</h2>
+
+        <table>
+
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Age</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr *ngFor="let patient of patients">
+
+              <td>
+                {{ patient.firstName }} {{ patient.lastName }}
+              </td>
+
+              <td>{{ patient.email }}</td>
+
+              <td>{{ patient.phone }}</td>
+
+              <td>{{ patient.age }}</td>
+
+              <td>
+
+                <button
+                  class="small-btn"
+                  (click)="editPatient(patient)"
+                >
+                  Edit
+                </button>
+
+                <button
+                  class="delete-btn"
+                  (click)="deletePatient(patient.id)"
+                >
+                  Delete
+                </button>
+
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </section>
+
+    </div>
+
+  </div>
+
+</main>

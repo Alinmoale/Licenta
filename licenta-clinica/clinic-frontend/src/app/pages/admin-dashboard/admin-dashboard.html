@@ -1,1 +1,34 @@
-<p>admin-dashboard works!</p>
+<app-sidebar></app-sidebar>
+
+<main class="main-content">
+  <div class="dashboard-page">
+
+    <h1>Admin Dashboard</h1>
+    <p>Overview of clinic activity</p>
+
+    <div class="cards" *ngIf="stats">
+
+      <div class="card red">
+        <span>Doctors</span>
+        <strong>{{ stats.totalDoctors }}</strong>
+      </div>
+
+      <div class="card blue">
+        <span>Patients</span>
+        <strong>{{ stats.totalPatients }}</strong>
+      </div>
+
+      <div class="card yellow">
+        <span>Consultations</span>
+        <strong>{{ stats.totalConsultations }}</strong>
+      </div>
+
+      <div class="card green">
+        <span>Revenue</span>
+        <strong>{{ stats.revenue }} RON</strong>
+      </div>
+
+    </div>
+
+  </div>
+</main>

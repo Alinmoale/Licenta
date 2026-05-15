@@ -1,1 +1,65 @@
-<p>doctors works!</p>
+<app-sidebar></app-sidebar>
+
+<main class="main-content">
+  <div class="page">
+
+    <h1>Doctors</h1>
+    <p>Manage clinic doctors</p>
+
+    <div class="content-grid">
+
+      <section class="form-card">
+        <h2>Add Doctor</h2>
+
+        <input placeholder="Username" [(ngModel)]="form.username">
+        <input placeholder="Email" [(ngModel)]="form.email">
+        <input placeholder="Password" type="password" [(ngModel)]="form.password">
+        <input placeholder="First name" [(ngModel)]="form.firstName">
+        <input placeholder="Last name" [(ngModel)]="form.lastName">
+        <input placeholder="Phone" [(ngModel)]="form.phone">
+        <input placeholder="Specialization" [(ngModel)]="form.specialization">
+
+        <button (click)="saveDoctor()">
+        {{ editingDoctorId ? 'Update Doctor' : 'Save Doctor' }}
+        </button>
+
+        <button *ngIf="editingDoctorId" class="cancel-btn" (click)="resetForm()">
+        Cancel
+        </button>
+
+      </section>
+
+      <section class="table-card">
+        <h2>Doctor List</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Specialization</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let doctor of doctors">
+              <td>{{ doctor.firstName }} {{ doctor.lastName }}</td>
+              <td>{{ doctor.email }}</td>
+              <td>{{ doctor.phone }}</td>
+              <td>{{ doctor.specialization }}</td>
+              <td>{{ doctor.status }}</td>
+              <td>
+                <button class="small-btn" (click)="editDoctor(doctor)">Edit</button>
+                <button class="delete-btn" (click)="deleteDoctor(doctor.id)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+    </div>
+  </div>
+</main>

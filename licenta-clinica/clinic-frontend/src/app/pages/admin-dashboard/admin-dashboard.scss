@@ -1,0 +1,60 @@
+.dashboard-page {
+  padding: 32px;
+  background: #f5f7fb;
+  min-height: 100vh;
+}
+
+.main-content {
+  margin-left: 288px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 32px;
+  color: #111827;
+}
+
+p {
+  color: #6b7280;
+  margin-bottom: 32px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.card {
+  padding: 28px;
+  border-radius: 18px;
+  color: white;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+}
+
+.card span {
+  display: block;
+  font-size: 14px;
+  opacity: 0.9;
+  margin-bottom: 12px;
+}
+
+.card strong {
+  font-size: 36px;
+}
+
+.blue {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+}
+
+.green {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.yellow {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.red {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}

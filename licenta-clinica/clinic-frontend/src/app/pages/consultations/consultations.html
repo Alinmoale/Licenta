@@ -1,1 +1,67 @@
-<p>consultations works!</p>
+<app-sidebar></app-sidebar>
+
+<main class="main-content">
+  <div class="page">
+
+    <h1>Consultations</h1>
+    <p>Create and view medical consultations</p>
+
+    <div class="content-grid">
+
+      <section class="form-card">
+        <h2>New Consultation</h2>
+
+        <select [(ngModel)]="form.patientId" (change)="loadConsultationsForPatient()">
+          <option value="">Select patient</option>
+          <option *ngFor="let patient of patients" [value]="patient.id">
+            {{ patient.firstName }} {{ patient.lastName }}
+          </option>
+        </select>
+
+        <select [(ngModel)]="form.doctorId">
+          <option value="">Select doctor</option>
+          <option *ngFor="let doctor of doctors" [value]="doctor.id">
+            Dr. {{ doctor.firstName }} {{ doctor.lastName }}
+          </option>
+        </select>
+
+        <textarea placeholder="Symptoms" [(ngModel)]="form.symptoms"></textarea>
+        <textarea placeholder="Diagnosis" [(ngModel)]="form.diagnosis"></textarea>
+        <textarea placeholder="Treatment" [(ngModel)]="form.treatment"></textarea>
+        <textarea placeholder="Recommendations" [(ngModel)]="form.recommendations"></textarea>
+
+        <button (click)="saveConsultation()">Save Consultation</button>
+      </section>
+
+      <section class="table-card">
+        <h2>Consultation History</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Symptoms</th>
+              <th>Diagnosis</th>
+              <th>Treatment</th>
+              <th>Recommendations</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let consultation of consultations">
+              <td>{{ consultation.symptoms }}</td>
+              <td>{{ consultation.diagnosis }}</td>
+              <td>{{ consultation.treatment }}</td>
+              <td>{{ consultation.recommendations }}</td>
+              <td>
+                {{ consultation.createdAt | date:'dd/MM/yyyy HH:mm' }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+    </div>
+
+  </div>
+</main>
