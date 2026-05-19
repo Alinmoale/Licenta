@@ -20,6 +20,17 @@ public class ConsultationController {
     @PostMapping
     public Consultation createConsultation(@RequestBody CreateConsultationRequest request) {
 
+        if (
+                request.getPatientId() == null || request.getPatientId().isBlank() ||
+                request.getDoctorId() == null || request.getDoctorId().isBlank() ||
+                request.getSymptoms() == null || request.getSymptoms().isBlank() ||
+                request.getDiagnosis() == null || request.getDiagnosis().isBlank() ||
+                request.getTreatment() == null || request.getTreatment().isBlank() ||
+                request.getRecommendations() == null || request.getRecommendations().isBlank()
+        ) {
+            throw new RuntimeException("All consultation fields are required");
+        }
+
         Consultation consultation = new Consultation(
                 request.getPatientId(),
                 request.getDoctorId(),

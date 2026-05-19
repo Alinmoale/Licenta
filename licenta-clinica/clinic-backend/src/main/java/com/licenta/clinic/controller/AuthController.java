@@ -30,18 +30,22 @@ public class AuthController {
         }
 
         String doctorId = null;
+        String displayName = user.getEmail();
 
         if ("DOCTOR".equalsIgnoreCase(user.getRole())) {
-            doctorId = doctorRepository.findByUserId(user.getId())
-                    .map(Doctor::getId)
-                    .orElse(null);
+            Doctor doctor = doctorRepository.findByUserId(user.getId())
+                    .orElseThrow(() -> new RuntimeException("Doctor profile not found"));
+
+            doctorId = doctor.getId();
+            displayName = "Dr. " + doctor.getFirstName() + " " + doctor.getLastName();
         }
 
         return new LoginResponse(
                 user.getId(),
                 user.getEmail(),
                 user.getRole(),
-                doctorId
+                doctorId,
+                displayName
         );
     }
 }

@@ -26,6 +26,9 @@ public class PatientController {
     // Admin: adaugă pacient pentru orice doctor
     @PostMapping
     public Patient createPatientByAdmin(@RequestBody CreatePatientRequest request) {
+        if (request.getDoctorId() == null || request.getDoctorId().isBlank()) {
+            throw new RuntimeException("Doctor is required");
+        }
         Patient patient = new Patient(
                 request.getDoctorId(),
                 request.getFirstName(),
