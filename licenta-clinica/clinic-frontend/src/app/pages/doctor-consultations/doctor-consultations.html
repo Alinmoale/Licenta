@@ -1,0 +1,125 @@
+<app-doctor-sidebar></app-doctor-sidebar>
+
+<main class="main-content">
+  <div class="page">
+
+    <h1>My Consultations</h1>
+    <p>Create consultations and view patient medical history</p>
+
+    <div class="content-grid">
+
+      <section class="form-card">
+
+        <h2>New Consultation</h2>
+
+        <select
+          [(ngModel)]="selectedPatientId"
+          (change)="onPatientChange()"
+          [class.error-field]="showError && !form.patientId"
+        >
+          <option value="">Select patient</option>
+
+          <option
+            *ngFor="let patient of patients"
+            [value]="patient.id"
+          >
+            {{ patient.firstName }} {{ patient.lastName }}
+          </option>
+        </select>
+
+        <small class="error-text" *ngIf="showError && !form.patientId">
+          Patient is required
+        </small>
+
+       <textarea
+        placeholder="Symptoms"
+        [(ngModel)]="form.symptoms"
+        [class.error-field]="showError && !form.symptoms"
+        ></textarea>
+
+        <small class="error-text" *ngIf="showError && !form.symptoms">
+        Symptoms are required
+        </small>
+
+        <textarea
+          placeholder="Diagnosis"
+          [(ngModel)]="form.diagnosis"
+          [class.error-field]="showError && !form.diagnosis"
+        ></textarea>
+
+        <small class="error-text" *ngIf="showError && !form.diagnosis">
+          Diagnosis is required
+        </small>
+
+        <textarea
+          placeholder="Treatment"
+          [(ngModel)]="form.treatment"
+          [class.error-field]="showError && !form.treatment"
+        ></textarea>
+
+        <small class="error-text" *ngIf="showError && !form.treatment">
+          Treatment is required
+        </small>
+
+        <textarea
+        placeholder="Recommendations"
+        [(ngModel)]="form.recommendations"
+        [class.error-field]="showError && !form.recommendations"
+        ></textarea>
+
+        <small class="error-text" *ngIf="showError && !form.recommendations">
+        Recommendations are required
+        </small>
+
+        <button (click)="saveConsultation()">
+          Save Consultation
+        </button>
+
+      </section>
+
+      <section class="table-card">
+
+        <h2>Consultation History</h2>
+
+        <div class="consultation-list">
+
+        <div class="consultation-card" *ngFor="let consultation of consultations">
+
+            <div class="consultation-date">
+            {{ consultation.createdAt | date:'dd/MM/yyyy HH:mm' }}
+            </div>
+
+            <div class="section">
+            <strong>Symptoms</strong>
+            <p>{{ consultation.symptoms }}</p>
+            </div>
+
+            <div class="section">
+            <strong>Diagnosis</strong>
+            <p>{{ consultation.diagnosis }}</p>
+            </div>
+
+            <div class="section">
+            <strong>Treatment</strong>
+            <p>{{ consultation.treatment }}</p>
+            </div>
+
+            <div class="section">
+            <strong>Recommendations</strong>
+            <p>{{ consultation.recommendations }}</p>
+            </div>
+
+        </div>
+
+        </div>
+
+        <p class="empty-message" *ngIf="selectedPatientId && consultations.length === 0">
+          No consultations found for this patient.
+        </p>
+
+      </section>
+
+    </div>
+
+  </div>
+</main>

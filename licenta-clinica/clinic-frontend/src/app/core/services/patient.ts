@@ -30,4 +30,10 @@ export class PatientService {
   getDoctors() {
     return this.http.get<any[]>(this.DOCTORS_API);
   }
+  getPatientsByDoctor(doctorId: string) {
+    return this.http.get<any[]>(`${this.API}/doctor/${doctorId}`);
+  }
+  createPatientForDoctor(doctorId: string, data: any) {
+    return this.http.post(`${this.API}/doctor/${doctorId}`, data);
+  }
 }

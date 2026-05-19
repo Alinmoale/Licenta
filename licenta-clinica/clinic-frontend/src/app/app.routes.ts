@@ -8,6 +8,7 @@ import { Consultations } from './pages/consultations/consultations';
 import { Billing } from './pages/billing/billing';
 import { DoctorDashboard } from './pages/doctor-dashboard/doctor-dashboard';
 import { DoctorPatients } from './pages/doctor-patients/doctor-patients';
+import { DoctorConsultations } from './pages/doctor-consultations/doctor-consultations';
 
 export const routes: Routes = [
   {
@@ -45,5 +46,9 @@ export const routes: Routes = [
   {
     path: 'doctor/patients',
     component: DoctorPatients
+  },
+  {
+    path: 'doctor/consultations',
+    component: DoctorConsultations
   }
 ];

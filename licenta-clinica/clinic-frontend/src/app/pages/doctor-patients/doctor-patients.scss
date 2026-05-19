@@ -1,0 +1,111 @@
+.doctor-page {
+  min-height: 100vh;
+  background: #f5f7fb;
+  padding: 32px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 32px;
+  color: #111827;
+}
+
+p {
+  color: #6b7280;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 24px;
+}
+
+.form-card,
+.table-card {
+  background: white;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.form-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+input,
+textarea {
+  padding: 13px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+button {
+  padding: 12px 14px;
+  border: none;
+  border-radius: 10px;
+  background: #2563eb;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background: #6b7280;
+}
+
+.small-btn {
+  padding: 8px 12px;
+  margin-right: 8px;
+  font-size: 13px;
+}
+
+.delete-btn {
+  padding: 8px 12px;
+  background: #dc2626;
+  font-size: 13px;
+}
+
+.error-field {
+  border: 1px solid #dc2626 !important;
+}
+
+.error-text {
+  color: #dc2626;
+  font-size: 12px;
+  margin-top: -8px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  text-align: left;
+  color: #6b7280;
+  font-size: 14px;
+  padding-bottom: 14px;
+}
+
+td {
+  padding: 14px 0;
+  border-top: 1px solid #e5e7eb;
+}
+.main-content {
+  margin-left: 288px;
+}

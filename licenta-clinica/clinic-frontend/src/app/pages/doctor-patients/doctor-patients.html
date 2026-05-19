@@ -1,1 +1,102 @@
-<p>doctor-patients works!</p>
+
+<app-doctor-sidebar></app-doctor-sidebar>
+
+<main class="main-content">
+
+  <div class="doctor-page">
+
+  <header class="topbar">
+    <div>
+      <h1>My Patients</h1>
+      <p>Manage your own patients</p>
+    </div>
+
+    <button routerLink="/doctor/dashboard">Back to Dashboard</button>
+  </header>
+
+  <div class="content-grid">
+
+    <section class="form-card">
+      <h2>{{ editingPatientId ? 'Edit Patient' : 'Add Patient' }}</h2>
+
+      <input
+        placeholder="First name"
+        [(ngModel)]="form.firstName"
+        [class.error-field]="showError && !form.firstName"
+      >
+
+      <small class="error-text" *ngIf="showError && !form.firstName">
+        First name is required
+      </small>
+
+      <input
+        placeholder="Last name"
+        [(ngModel)]="form.lastName"
+        [class.error-field]="showError && !form.lastName"
+      >
+
+      <small class="error-text" *ngIf="showError && !form.lastName">
+        Last name is required
+      </small>
+
+      <input placeholder="Email" [(ngModel)]="form.email">
+      <input placeholder="Phone" [(ngModel)]="form.phone">
+      <input type="number" placeholder="Age" [(ngModel)]="form.age">
+      <input placeholder="Gender" [(ngModel)]="form.gender">
+      <input placeholder="Address" [(ngModel)]="form.address">
+
+      <textarea
+        placeholder="Medical history"
+        [(ngModel)]="form.medicalHistory"
+      ></textarea>
+
+      <button (click)="savePatient()">
+        {{ editingPatientId ? 'Update Patient' : 'Save Patient' }}
+      </button>
+
+      <button
+        *ngIf="editingPatientId"
+        class="cancel-btn"
+        (click)="resetForm()"
+      >
+        Cancel
+      </button>
+    </section>
+
+    <section class="table-card">
+      <h2>Patient List</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Age</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let patient of patients">
+            <td>{{ patient.firstName }} {{ patient.lastName }}</td>
+            <td>{{ patient.email }}</td>
+            <td>{{ patient.phone }}</td>
+            <td>{{ patient.age }}</td>
+            <td>
+              <button class="small-btn" (click)="editPatient(patient)">
+                Edit
+              </button>
+
+              <button class="delete-btn" (click)="deletePatient(patient.id)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+  </div>
+
+</div>

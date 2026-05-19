@@ -1,1 +1,56 @@
-<p>doctor-dashboard works!</p>
+<app-doctor-sidebar></app-doctor-sidebar>
+
+<main class="main-content">
+
+    <div class="doctor-page">
+
+    <header class="topbar">
+        <div>
+        <h1>Doctor Dashboard</h1>
+        <p>Welcome back, {{ doctorName }}</p>
+        </div>
+
+        <button routerLink="/">Logout</button>
+    </header>
+
+    <section class="cards">
+        <div class="card blue">
+        <span>My Patients</span>
+        <strong>{{ patients.length }}</strong>
+        </div>
+
+        <div class="card green">
+        <span>My Consultations</span>
+        <strong>{{ consultations.length }}</strong>
+        </div>
+    </section>
+
+    <section class="table-card">
+        <div class="section-header">
+        <h2>My Patients</h2>
+        <button routerLink="/doctor/patients">View All</button>
+        </div>
+
+        <table>
+        <thead>
+            <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Age</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let patient of patients">
+            <td>{{ patient.firstName }} {{ patient.lastName }}</td>
+            <td>{{ patient.email }}</td>
+            <td>{{ patient.phone }}</td>
+            <td>{{ patient.age }}</td>
+            </tr>
+        </tbody>
+        </table>
+    </section>
+
+    </div>
+</main>    

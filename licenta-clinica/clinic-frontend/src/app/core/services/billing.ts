@@ -1,6 +1,23 @@
-import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class Billing {}
+export class BillingService {
+
+  private http = inject(HttpClient);
+  private API = 'http://localhost:8080/api/billing';
+
+  getBilling() {
+    return this.http.get<any[]>(this.API);
+  }
+
+  createBilling(data: any) {
+    return this.http.post(this.API, data);
+  }
+
+  getRevenue() {
+    return this.http.get<number>(`${this.API}/revenue`);
+  }
+}

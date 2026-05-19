@@ -12,6 +12,7 @@ import { PatientService } from '../../core/services/patient';
   templateUrl: './patients.html',
   styleUrl: './patients.scss'
 })
+
 export class Patients implements OnInit {
 
   private patientService = inject(PatientService);
@@ -20,6 +21,7 @@ export class Patients implements OnInit {
   doctors: any[] = [];
 
   editingPatientId: string | null = null;
+  showDoctorError = false;
 
   form = {
     doctorId: '',
@@ -51,6 +53,13 @@ export class Patients implements OnInit {
   }
 
   savePatient() {
+    
+    if (!this.form.doctorId) {
+      this.showDoctorError = true;
+      return;
+    }
+
+    this.showDoctorError = false;
 
     if (this.editingPatientId) {
 
@@ -64,15 +73,15 @@ export class Patients implements OnInit {
         }
       });
 
-    } else {
+      } else {
 
-      this.patientService.createPatient(this.form).subscribe({
-        next: () => {
-          this.loadPatients();
-          this.resetForm();
-        }
-      });
-    }
+        this.patientService.createPatient(this.form).subscribe({
+          next: () => {
+            this.loadPatients();
+            this.resetForm();
+          }
+        });
+      }
   }
 
   editPatient(patient: any) {

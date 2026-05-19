@@ -1,1 +1,92 @@
-<p>billing works!</p>
+<app-sidebar></app-sidebar>
+
+<main class="main-content">
+  <div class="page">
+
+    <h1>Billing</h1>
+    <p>Manage consultation payments and clinic revenue</p>
+
+    <div class="revenue-card">
+      <span>Total Revenue</span>
+      <strong>{{ revenue }} RON</strong>
+    </div>
+
+    <div class="content-grid">
+
+      <section class="form-card">
+        <h2>Create Billing</h2>
+
+        <select [(ngModel)]="form.doctorId">
+          <option value="">Select doctor</option>
+          <option *ngFor="let doctor of doctors" [value]="doctor.id">
+            Dr. {{ doctor.firstName }} {{ doctor.lastName }}
+          </option>
+        </select>
+
+        <select
+        [(ngModel)]="form.patientId"
+        (change)="loadConsultationsForPatient()"
+        >
+            <option value="">Select patient</option>
+            <option *ngFor="let patient of patients" [value]="patient.id">
+                {{ patient.firstName }} {{ patient.lastName }}
+            </option>
+            </select>
+
+            <select [(ngModel)]="form.consultationId">
+            <option value="">Select consultation</option>
+            <option *ngFor="let consultation of consultations" [value]="consultation.id">
+                {{ consultation.createdAt | date:'dd/MM/yyyy HH:mm' }} - {{ consultation.diagnosis }}
+            </option>
+        </select>
+
+        <input placeholder="Service name" [(ngModel)]="form.serviceName">
+
+        <input type="number" placeholder="Price" [(ngModel)]="form.price">
+
+        <select [(ngModel)]="form.status">
+          <option value="UNPAID">UNPAID</option>
+          <option value="PAID">PAID</option>
+        </select>
+
+        <button (click)="saveBilling()">Save Billing</button>
+      </section>
+
+      <section class="table-card">
+        <h2>Billing Records</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Patient</th>
+              <th>Doctor</th>
+              <th>Service</th>
+              <th>Price</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let billing of billings">
+              <td>{{ getPatientName(billing.patientId) }}</td>
+              <td>{{ getDoctorName(billing.doctorId) }}</td>
+              <td>{{ billing.serviceName }}</td>
+              <td>{{ billing.price }} RON</td>
+              <td>
+                <span
+                  class="status"
+                  [class.paid]="billing.status === 'PAID'"
+                  [class.unpaid]="billing.status === 'UNPAID'"
+                >
+                  {{ billing.status }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+    </div>
+
+  </div>
+</main>

@@ -24,7 +24,15 @@
           >
             {{ doctor.firstName }} {{ doctor.lastName }}
           </option>
+
         </select>
+
+        <small
+          class="error-text"
+          *ngIf="showDoctorError && !form.doctorId"
+        >
+          Doctor is required
+        </small>
 
         <input placeholder="First name" [(ngModel)]="form.firstName">
         <input placeholder="Last name" [(ngModel)]="form.lastName">
@@ -43,6 +51,14 @@
 
         <button (click)="savePatient()">
           {{ editingPatientId ? 'Update Patient' : 'Save Patient' }}
+        </button>
+
+        <button
+          *ngIf="editingPatientId"
+          class="cancel-btn"
+          (click)="resetForm()"
+        >
+          Cancel
         </button>
 
       </section>

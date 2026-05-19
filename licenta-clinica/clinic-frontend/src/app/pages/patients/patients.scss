@@ -89,3 +89,21 @@ td {
 .cancel-btn {
   background: #6b7280;
 }
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.error-field {
+  border: 1px solid #dc2626 !important;
+}
+
+.error-text {
+  color: #dc2626;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.cancel-btn {
+  background: #6b7280;
+}
