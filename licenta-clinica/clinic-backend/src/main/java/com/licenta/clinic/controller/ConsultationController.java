@@ -4,6 +4,9 @@ import com.licenta.clinic.dto.CreateConsultationRequest;
 import com.licenta.clinic.model.Consultation;
 import com.licenta.clinic.repository.ConsultationRepository;
 import org.springframework.web.bind.annotation.*;
+import com.licenta.clinic.model.Patient;
+import com.licenta.clinic.repository.PatientRepository;
+import com.licenta.clinic.service.EmailService;
 
 import java.util.List;
 
@@ -12,9 +15,13 @@ import java.util.List;
 public class ConsultationController {
 
     private final ConsultationRepository consultationRepository;
+    private final PatientRepository patientRepository;
+    private final EmailService emailService;
 
-    public ConsultationController(ConsultationRepository consultationRepository) {
+    public ConsultationController(ConsultationRepository consultationRepository , PatientRepository patientRepository, EmailService emailService) {
         this.consultationRepository = consultationRepository;
+        this.patientRepository = patientRepository;
+        this.emailService = emailService;
     }
 
     @PostMapping
@@ -43,6 +50,26 @@ public class ConsultationController {
         return consultationRepository.save(consultation);
     }
 
+    @PostMapping("/{id}/send-email")
+    public String sendConsultationEmail(@PathVariable String id) {
+
+        Consultation consultation = consultationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Consultation not found"));
+
+        Patient patient = patientRepository.findById(consultation.getPatientId())
+                .orElseThrow(() -> new RuntimeException("Patient not found"));
+
+        emailService.sendConsultationEmail(
+                patient.getEmail(),
+                patient.getFirstName(),
+                consultation.getDiagnosis(),
+                consultation.getTreatment(),
+                consultation.getRecommendations()
+        );
+
+        return "Email sent successfully";
+    }
+
     @GetMapping("/doctor/{doctorId}")
     public List<Consultation> getByDoctor(@PathVariable String doctorId) {
         return consultationRepository.findByDoctorId(doctorId);
@@ -52,4 +79,5 @@ public class ConsultationController {
     public List<Consultation> getByPatient(@PathVariable String patientId) {
         return consultationRepository.findByPatientId(patientId);
     }
+
 }
