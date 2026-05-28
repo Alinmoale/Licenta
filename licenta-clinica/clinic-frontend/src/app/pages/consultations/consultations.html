@@ -1,3 +1,6 @@
+<div class="layout">
+
+
 <app-sidebar></app-sidebar>
 
 <main class="main-content">
@@ -11,17 +14,23 @@
       <section class="form-card">
         <h2>New Consultation</h2>
 
-        <select [(ngModel)]="form.patientId" (change)="loadConsultationsForPatient()">
-          <option value="">Select patient</option>
-          <option *ngFor="let patient of patients" [value]="patient.id">
-            {{ patient.firstName }} {{ patient.lastName }}
+        <select [(ngModel)]="form.doctorId" (change)="onDoctorChange()">
+          <option value="">Select doctor</option>
+
+          <option *ngFor="let doctor of doctors" [value]="doctor.id">
+            Dr. {{ doctor.firstName }} {{ doctor.lastName }}
           </option>
         </select>
 
-        <select [(ngModel)]="form.doctorId">
-          <option value="">Select doctor</option>
-          <option *ngFor="let doctor of doctors" [value]="doctor.id">
-            Dr. {{ doctor.firstName }} {{ doctor.lastName }}
+        <select
+          [(ngModel)]="form.patientId"
+          (change)="loadConsultationsForPatient()"
+          [disabled]="!form.doctorId"
+        >
+          <option value="">Select patient</option>
+
+          <option *ngFor="let patient of filteredPatients" [value]="patient.id">
+            {{ patient.firstName }} {{ patient.lastName }}
           </option>
         </select>
 

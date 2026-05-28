@@ -1,5 +1,16 @@
 .main-content {
-  margin-left: 288px;
+  flex: 1;
+}
+.layout {
+  display: flex;
+  background: #f5f7fb;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
 }
 
 .page {
@@ -128,4 +139,9 @@ td {
   color: #374151;
   line-height: 1.5;
   word-break: break-word;
+}
+
+.send-btn {
+  margin-top: 10px;
+  background: #10b981;
 }

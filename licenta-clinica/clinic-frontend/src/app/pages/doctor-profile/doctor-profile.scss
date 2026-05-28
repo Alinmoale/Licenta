@@ -1,15 +1,13 @@
-.main-content {
-  flex: 1;
-}
 .layout {
   display: flex;
+  min-height: 100vh;
   background: #f5f7fb;
 }
 
-.page {
+.main-content {
+  flex: 1;
   padding: 32px;
-  background: #f5f7fb;
-  min-height: 100vh;
+  min-width: 0;
 }
 
 h1 {
@@ -25,19 +23,23 @@ p {
 
 .content-grid {
   display: grid;
-  grid-template-columns: 360px 1fr;
+  grid-template-columns: repeat(2, 420px);
   gap: 24px;
 }
 
-.form-card,
-.table-card {
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.form-card {
   background: white;
   border-radius: 18px;
   padding: 24px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-}
 
-.form-card {
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -60,36 +62,16 @@ button {
   cursor: pointer;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
+.password-btn {
+  background: #111827;
 }
 
-th {
-  text-align: left;
-  color: #6b7280;
-  font-size: 14px;
-  padding-bottom: 14px;
-}
+@media (max-width: 1000px) {
+  .layout {
+    flex-direction: column;
+  }
 
-td {
-  padding: 14px 0;
-  border-top: 1px solid #e5e7eb;
-}
-
-.small-btn {
-  padding: 8px 12px;
-  margin-right: 8px;
-  background: #2563eb;
-  font-size: 13px;
-}
-
-.delete-btn {
-  padding: 8px 12px;
-  background: #dc2626;
-  font-size: 13px;
-}
-
-.cancel-btn {
-  background: #6b7280;
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
 }

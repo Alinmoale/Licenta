@@ -23,6 +23,7 @@ export class Consultations implements OnInit {
   patients: any[] = [];
   doctors: any[] = [];
   consultations: any[] = [];
+  filteredPatients: any[] = [];
 
   form = {
     patientId: '',
@@ -70,4 +71,21 @@ export class Consultations implements OnInit {
       error: () => alert('Could not save consultation')
     });
   }
+  onDoctorChange() {
+    this.form.patientId = '';
+    this.consultations = [];
+    this.filteredPatients = [];
+
+    if (!this.form.doctorId) {
+      return;
+    }
+
+    this.patientService.getPatientsByDoctor(this.form.doctorId).subscribe({
+      next: (data) => {
+        this.filteredPatients = data;
+      }
+    });
+  }
+
+
 }

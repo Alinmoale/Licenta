@@ -1,126 +1,129 @@
-<app-sidebar></app-sidebar>
+<div class="layout">
 
-<main class="main-content">
+  <app-sidebar></app-sidebar>
 
-  <div class="page">
+  <main class="main-content">
 
-    <h1>Patients</h1>
-    <p>Manage clinic patients</p>
+    <div class="page">
 
-    <div class="content-grid">
+      <h1>Patients</h1>
+      <p>Manage clinic patients</p>
 
-      <section class="form-card">
+      <div class="content-grid">
 
-        <h2>
-          {{ editingPatientId ? 'Edit Patient' : 'Add Patient' }}
-        </h2>
+        <section class="form-card">
 
-        <select [(ngModel)]="form.doctorId">
-          <option value="">Select doctor</option>
+          <h2>
+            {{ editingPatientId ? 'Edit Patient' : 'Add Patient' }}
+          </h2>
 
-          <option
-            *ngFor="let doctor of doctors"
-            [value]="doctor.id"
+          <select [(ngModel)]="form.doctorId">
+            <option value="">Select doctor</option>
+
+            <option
+              *ngFor="let doctor of doctors"
+              [value]="doctor.id"
+            >
+              {{ doctor.firstName }} {{ doctor.lastName }}
+            </option>
+
+          </select>
+
+          <small
+            class="error-text"
+            *ngIf="showDoctorError && !form.doctorId"
           >
-            {{ doctor.firstName }} {{ doctor.lastName }}
-          </option>
+            Doctor is required
+          </small>
 
-        </select>
+          <input placeholder="First name" [(ngModel)]="form.firstName">
+          <input placeholder="Last name" [(ngModel)]="form.lastName">
+          <input placeholder="Email" [(ngModel)]="form.email">
+          <input placeholder="Phone" [(ngModel)]="form.phone">
 
-        <small
-          class="error-text"
-          *ngIf="showDoctorError && !form.doctorId"
-        >
-          Doctor is required
-        </small>
+          <input type="number" placeholder="Age" [(ngModel)]="form.age">
 
-        <input placeholder="First name" [(ngModel)]="form.firstName">
-        <input placeholder="Last name" [(ngModel)]="form.lastName">
-        <input placeholder="Email" [(ngModel)]="form.email">
-        <input placeholder="Phone" [(ngModel)]="form.phone">
+          <input placeholder="Gender" [(ngModel)]="form.gender">
+          <input placeholder="Address" [(ngModel)]="form.address">
 
-        <input type="number" placeholder="Age" [(ngModel)]="form.age">
+          <textarea
+            placeholder="Medical history"
+            [(ngModel)]="form.medicalHistory"
+          ></textarea>
 
-        <input placeholder="Gender" [(ngModel)]="form.gender">
-        <input placeholder="Address" [(ngModel)]="form.address">
+          <button (click)="savePatient()">
+            {{ editingPatientId ? 'Update Patient' : 'Save Patient' }}
+          </button>
 
-        <textarea
-          placeholder="Medical history"
-          [(ngModel)]="form.medicalHistory"
-        ></textarea>
+          <button
+            *ngIf="editingPatientId"
+            class="cancel-btn"
+            (click)="resetForm()"
+          >
+            Cancel
+          </button>
 
-        <button (click)="savePatient()">
-          {{ editingPatientId ? 'Update Patient' : 'Save Patient' }}
-        </button>
+        </section>
 
-        <button
-          *ngIf="editingPatientId"
-          class="cancel-btn"
-          (click)="resetForm()"
-        >
-          Cancel
-        </button>
+        <section class="table-card">
 
-      </section>
+          <h2>Patients List</h2>
 
-      <section class="table-card">
+          <table>
 
-        <h2>Patients List</h2>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Age</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
 
-        <table>
+            <tbody>
 
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Age</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
+              <tr *ngFor="let patient of patients">
 
-          <tbody>
+                <td>
+                  {{ patient.firstName }} {{ patient.lastName }}
+                </td>
 
-            <tr *ngFor="let patient of patients">
+                <td>{{ patient.email }}</td>
 
-              <td>
-                {{ patient.firstName }} {{ patient.lastName }}
-              </td>
+                <td>{{ patient.phone }}</td>
 
-              <td>{{ patient.email }}</td>
+                <td>{{ patient.age }}</td>
 
-              <td>{{ patient.phone }}</td>
+                <td>
 
-              <td>{{ patient.age }}</td>
+                  <button
+                    class="small-btn"
+                    (click)="editPatient(patient)"
+                  >
+                    Edit
+                  </button>
 
-              <td>
+                  <button
+                    class="delete-btn"
+                    (click)="deletePatient(patient.id)"
+                  >
+                    Delete
+                  </button>
 
-                <button
-                  class="small-btn"
-                  (click)="editPatient(patient)"
-                >
-                  Edit
-                </button>
+                </td>
 
-                <button
-                  class="delete-btn"
-                  (click)="deletePatient(patient.id)"
-                >
-                  Delete
-                </button>
+              </tr>
 
-              </td>
+            </tbody>
 
-            </tr>
+          </table>
 
-          </tbody>
+        </section>
 
-        </table>
-
-      </section>
+      </div>
 
     </div>
 
-  </div>
-
-</main>
+  </main>
+</div>

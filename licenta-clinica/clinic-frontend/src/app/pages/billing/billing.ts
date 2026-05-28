@@ -26,6 +26,8 @@ export class Billing implements OnInit {
   billings: any[] = [];
   patients: any[] = [];
   doctors: any[] = [];
+  filteredPatients: any[] = [];
+
 
   revenue = 0;
 
@@ -102,14 +104,34 @@ export class Billing implements OnInit {
   }
   
   loadConsultationsForPatient() {
+    this.form.consultationId = '';
+
     if (!this.form.patientId) {
       this.consultations = [];
-      this.form.consultationId = '';
       return;
     }
 
     this.consultationService.getConsultationsByPatient(this.form.patientId).subscribe({
-      next: (data) => this.consultations = data
+      next: (data) => {
+        this.consultations = data;
+      }
+    });
+  }
+  
+  onDoctorChange() {
+    this.form.patientId = '';
+    this.form.consultationId = '';
+    this.consultations = [];
+
+    if (!this.form.doctorId) {
+      this.filteredPatients = [];
+      return;
+    }
+
+    this.patientService.getPatientsByDoctor(this.form.doctorId).subscribe({
+      next: (data) => {
+        this.filteredPatients = data;
+      }
     });
   }
 }

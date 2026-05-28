@@ -24,4 +24,20 @@ export class DoctorService {
   deleteDoctor(id: string) {
     return this.http.delete(`${this.API}/${id}`);
   }
+
+  getDoctorProfile(doctorId: string) {
+    return this.http.get<any>(`http://localhost:8080/api/doctor/profile/${doctorId}`);
+  }
+
+  updateDoctorProfile(doctorId: string, data: any) {
+    return this.http.put<any>(`http://localhost:8080/api/doctor/profile/${doctorId}`, data);
+  }
+
+  changePassword(doctorId: string, data: any) {
+    return this.http.put(
+      `http://localhost:8080/api/doctor/profile/${doctorId}/change-password`,
+      data,
+      { responseType: 'text' }
+    );
+  }
 }

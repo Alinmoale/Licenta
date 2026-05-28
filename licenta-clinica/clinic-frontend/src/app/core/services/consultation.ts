@@ -20,4 +20,12 @@ export class ConsultationService {
   createConsultation(data: any) {
     return this.http.post(this.API, data);
   }
+
+  sendConsultationEmail(consultationId: string) {
+  return this.http.post(
+    `${this.API}/${consultationId}/send-email`,
+    {},
+    { responseType: 'text' }
+  );
+}
 }

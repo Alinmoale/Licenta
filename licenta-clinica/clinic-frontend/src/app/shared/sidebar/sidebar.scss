@@ -1,34 +1,104 @@
 .sidebar {
-  width: 240px;
+  width: 280px;
   height: 100vh;
+  position: sticky;
+  top: 0;
+
   background: #111827;
   color: white;
   padding: 24px;
-  position: fixed;
-  left: 0;
-  top: 0;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
 }
 
+
+
 .logo {
-  font-size: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 22px;
   font-weight: 700;
-  margin-bottom: 40px;
+  margin-bottom: 36px;
 }
 
 nav {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 10px;
 }
 
-a {
+nav a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
   color: #d1d5db;
   text-decoration: none;
+
   padding: 12px 14px;
   border-radius: 10px;
+
+  font-size: 15px;
+  font-weight: 500;
 }
 
-a:hover {
+nav a:hover {
   background: #1f2937;
   color: white;
+}
+
+.material-icons {
+  font-size: 20px;
+}
+
+.logout-btn {
+  margin-top: auto;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  padding: 13px;
+  border: none;
+  border-radius: 12px;
+
+  background: #dc2626;
+  color: white;
+
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background: #b91c1c;
+}
+@media (max-width: 900px) {
+  .sidebar {
+    width: 100%;
+    min-height: auto;
+    padding: 16px;
+  }
+
+  nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  nav a {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .logout-btn {
+    margin-top: 16px;
+  }
 }

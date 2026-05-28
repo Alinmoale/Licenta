@@ -1,0 +1,161 @@
+<div class="layout">
+
+  <app-doctor-sidebar></app-doctor-sidebar>
+
+  <main class="main-content">
+
+    <div class="page">
+
+      <header class="topbar">
+        <div>
+          <h1>My Appointments</h1>
+        </div>
+
+        <button routerLink="/doctor/dashboard">Back to Dashboard</button>
+      </header>
+
+      <div class="content-grid">
+
+        <section class="form-card">
+
+          <h2>New Appointment</h2>
+
+          <select [(ngModel)]="form.patientId">
+
+            <option value="">Select patient</option>
+
+            <option
+              *ngFor="let patient of patients"
+              [value]="patient.id"
+            >
+              {{ patient.firstName }} {{ patient.lastName }}
+            </option>
+
+          </select>
+
+          <div
+            class="datepicker-wrapper"
+            [class.disabled]="!form.patientId"
+          >
+
+            <mat-form-field appearance="outline" class="date-field" >
+
+              <input
+                matInput
+                readonly
+                [matDatepicker]="picker"
+                [matDatepickerFilter]="dateFilter"
+                placeholder="Select date"
+                [(ngModel)]="form.appointmentDate"
+                [disabled]="!form.patientId"
+                (click)="picker.open()"
+                (focus)="picker.open()"
+                (dateChange)="loadAvailableTimes()"
+              >
+
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+          </div>
+
+          <div
+            class="time-section"
+            *ngIf="availableTimes.length > 0"
+          >
+
+            <h4>Available Times</h4>
+
+            <div class="time-grid">
+
+              <button
+                type="button"
+                class="time-slot"
+                *ngFor="let time of availableTimes"
+                [class.active]="selectedTime === time"
+                (click)="selectTime(time)"
+              >
+                {{ time }}
+              </button>
+
+            </div>
+
+          </div>
+
+          <button (click)="saveAppointment()">
+            Save Appointment
+          </button>
+
+        </section>
+
+        <section class="table-card">
+
+          <h2>Appointment List</h2>
+
+          <table>
+
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Patient</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              <tr *ngFor="let appointment of paginatedAppointments">
+
+                <td>{{ appointment.appointmentDate }}</td>
+
+                <td>
+                  {{ appointment.startTime }}
+                  -
+                  {{ appointment.endTime }}
+                </td>
+
+                <td>
+                  {{ getPatientName(appointment.patientId) }}
+                </td>
+
+                <td>
+
+                  <span
+                    class="status"
+                    [class.scheduled]="appointment.status === 'SCHEDULED'"
+                    [class.completed]="appointment.status === 'COMPLETED'"
+                    [class.cancelled]="appointment.status === 'CANCELLED'"
+                  >
+                    {{ appointment.status }}
+                  </span>
+
+                </td>
+
+              </tr>
+
+            </tbody>
+
+          </table>
+
+          <div class="pagination" *ngIf="totalPages > 1">
+            <button (click)="previousPage()" [disabled]="currentPage === 1">
+                Previous
+            </button>
+
+            <span>Page {{ currentPage }} of {{ totalPages }}</span>
+
+            <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+                Next
+            </button>
+           </div>
+
+        </section>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>

@@ -5,11 +5,13 @@ import { FormsModule } from '@angular/forms';
 import { DoctorSidebar } from '../../shared/doctor-sidebar/doctor-sidebar';
 import { PatientService } from '../../core/services/patient';
 import { ConsultationService } from '../../core/services/consultation';
+import { RouterLink } from '@angular/router';
+
 
 @Component({
   selector: 'app-doctor-consultations',
   standalone: true,
-  imports: [CommonModule, FormsModule, DoctorSidebar],
+  imports: [CommonModule, FormsModule, DoctorSidebar, RouterLink ],
   templateUrl: './doctor-consultations.html',
   styleUrl: './doctor-consultations.scss'
 })
@@ -90,5 +92,16 @@ export class DoctorConsultations implements OnInit {
     this.form.diagnosis = '';
     this.form.treatment = '';
     this.form.recommendations = '';
+  }
+
+  sendEmail(consultationId: string) {
+    this.consultationService.sendConsultationEmail(consultationId).subscribe({
+      next: () => {
+        alert('Email sent successfully');
+      },
+      error: () => {
+        alert('Could not send email');
+      }
+    });
   }
 }

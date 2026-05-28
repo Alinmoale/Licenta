@@ -1,0 +1,59 @@
+<div class="layout">
+
+  <app-doctor-sidebar></app-doctor-sidebar>
+
+  <main class="main-content">
+
+    <div class="page">
+
+      <header class="topbar">
+        <div>
+          <h1>Profile</h1>
+        </div>
+
+        <button routerLink="/doctor/dashboard">Back to Dashboard</button>
+      </header>
+
+      <div class="content-grid">
+
+        <section class="form-card">
+          <h2>Doctor Details</h2>
+
+          <input placeholder="First name" [(ngModel)]="profile.firstName">
+          <input placeholder="Last name" [(ngModel)]="profile.lastName">
+          <input placeholder="Email" [(ngModel)]="profile.email">
+          <input placeholder="Phone" [(ngModel)]="profile.phone">
+          <input placeholder="Specialization" [(ngModel)]="profile.specialization">
+
+          <button (click)="saveProfile()">
+            Save Profile
+          </button>
+        </section>
+
+        <section class="form-card">
+          <h2>Change Password</h2>
+
+          <input
+            type="password"
+            placeholder="Current password"
+            [(ngModel)]="passwordForm.currentPassword"
+          >
+
+          <input
+            type="password"
+            placeholder="New password"
+            [(ngModel)]="passwordForm.newPassword"
+          >
+
+          <button class="password-btn" (click)="changePassword()">
+            Change Password
+          </button>
+        </section>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>

@@ -1,11 +1,20 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, MatIconModule],
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.scss'
 })
-export class Sidebar {}
+export class Sidebar {
+
+  constructor(private router: Router) {}
+
+  logout() {
+    localStorage.removeItem('user');
+    this.router.navigate(['/']);
+  }
+}

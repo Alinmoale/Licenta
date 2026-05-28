@@ -12,4 +12,7 @@ export class DashboardService {
   getDashboard() {
     return this.http.get(this.API);
   }
+  getCharts() {
+    return this.http.get<any>('http://localhost:8080/api/admin/dashboard/charts');
+  }
 }

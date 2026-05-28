@@ -9,6 +9,10 @@ import { Billing } from './pages/billing/billing';
 import { DoctorDashboard } from './pages/doctor-dashboard/doctor-dashboard';
 import { DoctorPatients } from './pages/doctor-patients/doctor-patients';
 import { DoctorConsultations } from './pages/doctor-consultations/doctor-consultations';
+import { DoctorProfile } from './pages/doctor-profile/doctor-profile';
+import { Appointments } from './pages/appointments/appointments';
+import { DoctorAppointments } from './pages/doctor-appointments/doctor-appointments';
+import { AdminProfile } from './pages/admin-profile/admin-profile';
 
 export const routes: Routes = [
   {
@@ -50,5 +54,21 @@ export const routes: Routes = [
   {
     path: 'doctor/consultations',
     component: DoctorConsultations
+  },
+  {
+    path: 'doctor/profile',
+    component: DoctorProfile
+  },
+  {
+    path: 'admin/appointments',
+    component: Appointments
+  },
+  {
+    path: 'doctor/appointments',
+    component: DoctorAppointments
+  },
+  {
+    path: 'admin/profile',
+    component: AdminProfile
   }
 ];

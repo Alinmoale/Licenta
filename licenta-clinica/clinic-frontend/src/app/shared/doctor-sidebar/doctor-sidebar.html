@@ -1,26 +1,41 @@
 <aside class="sidebar">
 
   <div class="logo">
-    🩺 Doctor Panel
+    <span class="material-icons">medical_services</span>
+    Doctor Panel
   </div>
 
   <nav>
 
     <a routerLink="/doctor/dashboard">
+      <span class="material-icons">dashboard</span>
       Dashboard
     </a>
 
     <a routerLink="/doctor/patients">
+      <span class="material-icons">groups</span>
       My Patients
     </a>
 
     <a routerLink="/doctor/consultations">
+      <span class="material-icons">description</span>
       My Consultations
+    </a>
+
+    <a routerLink="/doctor/appointments">
+      <span class="material-icons">event</span>
+      My Appointments
+    </a>
+
+    <a routerLink="/doctor/profile">
+      <span class="material-icons">person</span>
+      Profile
     </a>
 
   </nav>
 
   <button class="logout-btn" (click)="logout()">
+    <span class="material-icons">logout</span>
     Logout
   </button>
 
