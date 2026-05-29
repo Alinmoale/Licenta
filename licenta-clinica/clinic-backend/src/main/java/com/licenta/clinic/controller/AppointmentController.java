@@ -5,7 +5,6 @@ import com.licenta.clinic.model.Appointment;
 import com.licenta.clinic.repository.AppointmentRepository;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 import java.time.LocalTime;
 import java.util.List;
