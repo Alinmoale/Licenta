@@ -20,4 +20,5 @@ export class BillingService {
   getRevenue() {
     return this.http.get<number>(`${this.API}/revenue`);
   }
+
 }

@@ -13,7 +13,6 @@
 }
 
 h1 {
-  margin: 0;
   font-size: 32px;
   color: #111827;
 }
@@ -85,6 +84,9 @@ p {
 .chart-card h3 {
   margin-top: 0;
   margin-bottom: 20px;
+}
+.mt-4 {
+  margin-top: 40px;
 }
 
 @media (max-width: 1000px) {

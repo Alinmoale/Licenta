@@ -7,7 +7,6 @@
 }
 
 h1 {
-  margin: 0;
   font-size: 32px;
   color: #111827;
 }
@@ -17,6 +16,7 @@ p {
   margin-bottom: 24px;
 }
 
+
 .revenue-card {
   width: 280px;
   background: linear-gradient(135deg, #10b981, #059669);
@@ -24,6 +24,7 @@ p {
   padding: 24px;
   border-radius: 18px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+  margin-top: 40px;
   margin-bottom: 28px;
 }
 
@@ -115,9 +116,50 @@ td {
   background: #f5f7fb;
 }
 
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  padding: 24px;
+  border-radius: 18px;
+  color: white;
+
+  h4 {
+    margin: 0 0 10px;
+    font-size: 14px;
+    opacity: 0.9;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 38px;
+    font-weight: 700;
+  }
+}
+
+.revenue {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.paid-bill {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+}
+
+.unpaid-bill {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.cancelled-bill {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+
 .main-content {
   flex: 1;
-  padding: 32px;
   min-width: 0;
 }
 select:disabled {

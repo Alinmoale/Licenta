@@ -6,11 +6,30 @@
     <div class="page">
 
       <h1>Billing</h1>
-      <p>Manage consultation payments and clinic revenue</p>
 
-      <div class="revenue-card">
-        <span>Total Revenue</span>
-        <strong>{{ revenue | number:'1.0-0' }} RON</strong>
+      
+      <div class="stats-grid">
+
+        <div class="stat-card revenue">
+          <h4>Total Revenue</h4>
+          <h2>{{ revenue | number }} RON</h2>
+        </div>
+
+        <div class="stat-card paid-bill">
+          <h4>Paid Bills</h4>
+          <h2>{{ paidCount }}</h2>
+        </div>
+
+        <div class="stat-card unpaid-bill">
+          <h4>Unpaid Bills</h4>
+          <h2>{{ unpaidCount }}</h2>
+        </div>
+
+        <div class="stat-card cancelled-bill">
+          <h4>Cancelled Bills</h4>
+          <h2>{{ cancelledCount }}</h2>
+        </div>
+
       </div>
 
       <div class="content-grid">
@@ -93,6 +112,7 @@
             </tbody>
           </table>
         </section>
+      
 
       </div>
 

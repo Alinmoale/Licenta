@@ -27,6 +27,7 @@ export class Billing implements OnInit {
   patients: any[] = [];
   doctors: any[] = [];
   filteredPatients: any[] = [];
+  billingChartData: any;
 
 
   revenue = 0;
@@ -133,5 +134,72 @@ export class Billing implements OnInit {
         this.filteredPatients = data;
       }
     });
+  }
+  get paidCount() {
+    return this.billings.filter(b => b.status === 'PAID').length;
+  }
+
+  get unpaidCount() {
+    return this.billings.filter(b => b.status === 'UNPAID').length;
+  }
+
+  get cancelledCount() {
+    return this.billings.filter(b => b.status === 'CANCELLED').length;
+  }
+
+  getMonthName(month: number): string {
+
+    const months = [
+      '',
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec'
+    ];
+
+    return months[month];
+  }
+
+  loadChart() {
+
+    const revenueByMonth = new Map<number, number>();
+
+    this.billings
+      .filter(b => b.status === 'PAID')
+      .forEach(billing => {
+
+        const month = new Date(billing.createdAt).getMonth() + 1;
+
+        revenueByMonth.set(
+          month,
+          (revenueByMonth.get(month) || 0) + billing.price
+        );
+      });
+
+    const labels = Array.from(revenueByMonth.keys())
+      .sort((a, b) => a - b)
+      .map(month => this.getMonthName(month));
+
+    const values = Array.from(revenueByMonth.entries())
+      .sort((a, b) => a[0] - b[0])
+      .map(entry => entry[1]);
+
+    this.billingChartData = {
+      labels,
+      datasets: [
+        {
+          data: values,
+          label: 'Revenue'
+        }
+      ]
+    };
   }
 }
