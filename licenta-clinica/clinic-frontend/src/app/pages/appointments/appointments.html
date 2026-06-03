@@ -72,6 +72,12 @@
 
             </div>
 
+            <small
+            class="error-text"
+            *ngIf="doctorUnavailableMessage"
+          >
+            {{ doctorUnavailableMessage }}
+          </small>
           <small class="error-text" *ngIf="errorMessage">
             {{ errorMessage }}
           </small>

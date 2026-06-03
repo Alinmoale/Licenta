@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Sidebar } from '../../shared/sidebar/sidebar';
 import { DoctorService } from '../../core/services/doctor';
+import { DoctorUnavailabilityService } from '../../core/services/doctor-unavailability';
 
 @Component({
   selector: 'app-doctors',
@@ -14,8 +15,10 @@ import { DoctorService } from '../../core/services/doctor';
 export class Doctors implements OnInit {
 
   private doctorService = inject(DoctorService);
+  private doctorUnavailabilityService = inject(DoctorUnavailabilityService);
 
   doctors: any[] = [];
+  unavailabilityList: any[] = [];
 
   form = {
     username: '',
@@ -29,6 +32,7 @@ export class Doctors implements OnInit {
 
   ngOnInit(): void {
     this.loadDoctors();
+    this.loadUnavailability();
   }
 
   loadDoctors() {
@@ -98,5 +102,47 @@ export class Doctors implements OnInit {
       phone: '',
       specialization: ''
     };
+  }
+  loadUnavailability() {
+    this.doctorUnavailabilityService.getAll().subscribe({
+      next: (data) => {
+        this.unavailabilityList = data;
+      }
+    });
+  }
+  isDoctorUnavailable(doctorId: string): boolean {
+
+    const today = new Date();
+
+    return this.unavailabilityList.some(item => {
+
+      if (item.doctorId !== doctorId) {
+        return false;
+      }
+
+      const start = new Date(item.startDate);
+      const end = new Date(item.endDate);
+
+      return today >= start && today <= end;
+    });
+  }
+  getDoctorName(doctorId: string) {
+  const doctor = this.doctors.find(d => d.id === doctorId);
+
+  return doctor
+    ? `Dr. ${doctor.firstName} ${doctor.lastName}`
+    : doctorId;
+  }
+
+  deleteUnavailability(id: string) {
+    if (!confirm('Delete this leave period?')) {
+      return;
+    }
+
+    this.doctorUnavailabilityService.delete(id).subscribe({
+      next: () => {
+        this.loadUnavailability();
+      }
+    });
   }
 }

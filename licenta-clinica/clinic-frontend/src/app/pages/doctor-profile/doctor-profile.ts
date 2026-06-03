@@ -3,22 +3,35 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
-
+import { DoctorUnavailabilityService } from '../../core/services/doctor-unavailability';
 import { DoctorSidebar } from '../../shared/doctor-sidebar/doctor-sidebar';
 import { DoctorService } from '../../core/services/doctor';
+
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-doctor-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule, DoctorSidebar, RouterLink],
+  imports: [CommonModule, FormsModule, DoctorSidebar, RouterLink, MatDatepickerModule, MatNativeDateModule, MatInputModule
+  ],
   templateUrl: './doctor-profile.html',
   styleUrl: './doctor-profile.scss'
 })
 export class DoctorProfile implements OnInit {
 
   private doctorService = inject(DoctorService);
+  private doctorUnavailabilityService = inject(DoctorUnavailabilityService);
 
   user: any = null;
+  unavailabilityList: any[] = [];
+
+  availabilityForm = {
+    startDate: '',
+    endDate: '',
+    reason: ''
+  };
 
   profile = {
     firstName: '',
@@ -39,6 +52,7 @@ export class DoctorProfile implements OnInit {
     if (storedUser) {
       this.user = JSON.parse(storedUser);
       this.loadProfile();
+      this.loadUnavailability();
     }
   }
 
@@ -76,6 +90,59 @@ export class DoctorProfile implements OnInit {
         };
       },
       error: () => alert('Could not change password')
+    });
+  }
+  loadUnavailability() {
+
+    this.doctorUnavailabilityService
+      .getByDoctor(this.user.doctorId)
+      .subscribe({
+        next: (data) => {
+          this.unavailabilityList = data;
+        }
+      });
+  }
+  saveUnavailability() {
+
+    if (
+      !this.availabilityForm.startDate ||
+      !this.availabilityForm.endDate ||
+      !this.availabilityForm.reason
+    ) {
+      alert('All fields are required');
+      return;
+    }
+
+    const payload = {
+      doctorId: this.user.doctorId,
+      startDate: this.availabilityForm.startDate,
+      endDate: this.availabilityForm.endDate,
+      reason: this.availabilityForm.reason
+    };
+
+    this.doctorUnavailabilityService.create(payload).subscribe({
+      next: () => {
+
+        this.loadUnavailability();
+
+        this.availabilityForm = {
+          startDate: '',
+          endDate: '',
+          reason: ''
+        };
+      }
+    });
+  }
+  deleteUnavailability(id: string) {
+
+    if (!confirm('Delete this unavailability period?')) {
+      return;
+    }
+
+    this.doctorUnavailabilityService.delete(id).subscribe({
+      next: () => {
+        this.loadUnavailability();
+      }
     });
   }
 }

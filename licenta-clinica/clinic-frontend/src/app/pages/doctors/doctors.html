@@ -40,7 +40,7 @@
               <th>Email</th>
               <th>Phone</th>
               <th>Specialization</th>
-              <th>Status</th>
+              <th>Availability</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -51,7 +51,15 @@
               <td>{{ doctor.email }}</td>
               <td>{{ doctor.phone }}</td>
               <td>{{ doctor.specialization }}</td>
-              <td>{{ doctor.status }}</td>
+              <td>
+                <span
+                  class="availability-badge"
+                  [class.available]="!isDoctorUnavailable(doctor.id)"
+                  [class.unavailable]="isDoctorUnavailable(doctor.id)"
+                >
+                  {{ isDoctorUnavailable(doctor.id) ? 'UNAVAILABLE' : 'AVAILABLE' }}
+                </span>
+              </td>
               <td>
                 <button class="small-btn" (click)="editDoctor(doctor)">Edit</button>
                 <button class="delete-btn" (click)="deleteDoctor(doctor.id)">Delete</button>
@@ -59,6 +67,40 @@
             </tr>
           </tbody>
         </table>
+      </section>
+      <section class="leave-card">
+
+        <h2>Doctor Leave Schedule</h2>
+
+        <div class="leave-list" *ngIf="unavailabilityList.length > 0">
+
+          <div class="leave-item" *ngFor="let item of unavailabilityList">
+
+            <div>
+              <strong>{{ getDoctorName(item.doctorId) }}</strong>
+
+              <p>
+                {{ item.startDate }} - {{ item.endDate }}
+              </p>
+
+              <span>{{ item.reason }}</span>
+            </div>
+
+            <button
+              class="delete-btn"
+              (click)="deleteUnavailability(item.id)"
+            >
+              Delete
+            </button>
+
+          </div>
+
+        </div>
+
+        <p class="empty-message" *ngIf="unavailabilityList.length === 0">
+          No doctor leave periods found.
+        </p>
+
       </section>
 
     </div>

@@ -43,6 +43,7 @@ export class Appointments implements OnInit {
     startTime: ''
   };
 
+  doctorUnavailableMessage = '';
   errorMessage = '';
 
   ngOnInit(): void {
@@ -178,22 +179,31 @@ export class Appointments implements OnInit {
   }
   loadAvailableTimes() {
 
-  this.availableTimes = [];
-  this.selectedTime = '';
+    this.availableTimes = [];
+    this.selectedTime = '';
+    this.doctorUnavailableMessage = '';
 
-  if (!this.form.doctorId || !this.form.appointmentDate) {
-    return;
-  }
+    if (!this.form.doctorId || !this.form.appointmentDate) {
+      return;
+    }
 
-  const formattedDate = this.formatDate(this.form.appointmentDate);
+    const formattedDate = this.formatDate(this.form.appointmentDate);
 
     this.appointmentService
       .getAvailableTimes(this.form.doctorId, formattedDate)
       .subscribe({
         next: (data) => {
+
           this.availableTimes = data;
+
+          if (data.length === 0) {
+            this.doctorUnavailableMessage =
+              'Doctor is unavailable on this date.';
+          }
+
         }
       });
+
   }
   selectTime(time: string) {
     this.selectedTime = time;
