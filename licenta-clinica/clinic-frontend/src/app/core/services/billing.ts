@@ -20,5 +20,11 @@ export class BillingService {
   getRevenue() {
     return this.http.get<number>(`${this.API}/revenue`);
   }
+  updateStatus(id: string, status: string) {
+    return this.http.put(`${this.API}/${id}/status?status=${status}`, {});
+  }
+  deleteBilling(id: string) {
+    return this.http.delete(`${this.API}/${id}`);
+  }
 
 }

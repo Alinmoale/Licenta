@@ -24,6 +24,7 @@ export class DoctorConsultations implements OnInit {
 
   patients: any[] = [];
   consultations: any[] = [];
+  editingId: string | null = null;
 
   selectedPatientId = '';
 
@@ -69,19 +70,45 @@ export class DoctorConsultations implements OnInit {
       next: (data) => this.consultations = data
     });
   }
+  resetForm() {
+    this.editingId = null;
+    this.showError = false;
+
+    this.form.symptoms = '';
+    this.form.diagnosis = '';
+    this.form.treatment = '';
+    this.form.recommendations = '';
+  }
 
   saveConsultation() {
-    if (!this.form.patientId || !this.form.symptoms || !this.form.diagnosis || !this.form.treatment || !this.form.recommendations) {
-      this.showError = true;
+    this.showError = true;
+
+    if (
+      !this.form.patientId ||
+      !this.form.symptoms ||
+      !this.form.diagnosis ||
+      !this.form.treatment ||
+      !this.form.recommendations
+    ) {
       return;
     }
 
-    this.showError = false;
+    if (this.editingId) {
+      this.consultationService.updateConsultation(this.editingId, this.form).subscribe({
+        next: () => {
+          this.loadConsultationsForPatient();
+          this.resetForm();
+        },
+        error: () => alert('Could not update consultation')
+      });
+
+      return;
+    }
 
     this.consultationService.createConsultation(this.form).subscribe({
       next: () => {
         this.loadConsultationsForPatient();
-        this.resetFormFields();
+        this.resetForm();
       },
       error: () => alert('Could not save consultation')
     });
@@ -102,6 +129,33 @@ export class DoctorConsultations implements OnInit {
       error: () => {
         alert('Could not send email');
       }
+    });
+  }
+  editConsultation(consultation: any) {
+    this.editingId = consultation.id;
+
+    this.selectedPatientId = consultation.patientId;
+
+    this.form = {
+      patientId: consultation.patientId,
+      doctorId: consultation.doctorId,
+      symptoms: consultation.symptoms,
+      diagnosis: consultation.diagnosis,
+      treatment: consultation.treatment,
+      recommendations: consultation.recommendations
+    };
+  }
+
+  deleteConsultation(id: string) {
+    if (!confirm('Delete consultation?')) {
+      return;
+    }
+
+    this.consultationService.deleteConsultation(id).subscribe({
+      next: () => {
+        this.loadConsultationsForPatient();
+      },
+      error: () => alert('Could not delete consultation')
     });
   }
 }

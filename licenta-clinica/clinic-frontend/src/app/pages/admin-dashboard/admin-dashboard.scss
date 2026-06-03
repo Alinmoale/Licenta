@@ -76,9 +76,12 @@ p {
 
 .chart-card {
   background: white;
-  border-radius: 18px;
+  border-radius: 20px;
   padding: 24px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .chart-card h3 {
@@ -88,6 +91,50 @@ p {
 .mt-4 {
   margin-top: 40px;
 }
+.chart-toggle {
+  display: inline-flex;
+  width: fit-content;
+
+  padding: 4px;
+
+  background: #f3f4f6;
+
+  border-radius: 12px;
+
+  margin-bottom: 20px;
+}
+
+.chart-toggle button {
+  border: none;
+
+  background: transparent;
+
+  color: #6b7280;
+
+  padding: 10px 18px;
+
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.chart-toggle button:hover {
+  color: #111827;
+}
+
+.chart-toggle button.active {
+  background: white;
+
+  color: #2563eb;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
 
 @media (max-width: 1000px) {
   .charts-grid {

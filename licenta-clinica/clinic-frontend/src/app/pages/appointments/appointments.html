@@ -83,7 +83,6 @@
 
         <section class="table-card">
           <h2>Appointment List</h2>
-
           <table>
             <thead>
               <tr>
@@ -103,30 +102,29 @@
                 <td>{{ getDoctorName(appointment.doctorId) }}</td>
                 <td>{{ getPatientNameById(appointment.patientId) }}</td>
                 <td>
-                  <span
-                    class="status"
-                    [class.scheduled]="appointment.status === 'SCHEDULED'"
-                    [class.completed]="appointment.status === 'COMPLETED'"
-                    [class.cancelled]="appointment.status === 'CANCELLED'"
-                  >
-                    {{ appointment.status }}
-                  </span>
-                </td>
+                <select
+                  class="status-select"
+                  [(ngModel)]="appointment.status"
+                  (change)="updateStatus(appointment.id, appointment.status)"
+                  [ngClass]="{
+                    'scheduled-select': appointment.status === 'SCHEDULED',
+                    'completed-select': appointment.status === 'COMPLETED',
+                    'cancelled-select': appointment.status === 'CANCELLED'
+                  }"
+                >
+                  <option value="SCHEDULED">SCHEDULED</option>
+                  <option value="COMPLETED">COMPLETED</option>
+                  <option value="CANCELLED">CANCELLED</option>
+                </select>
+              </td>
                 <td>
-                <div class="actions">
-                    <button class="small-btn" (click)="updateStatus(appointment.id, 'COMPLETED')">
-                    Complete
-                    </button>
-
-                    <button class="cancel-btn" (click)="updateStatus(appointment.id, 'CANCELLED')">
-                    Cancel
-                    </button>
-
-                    <button class="delete-btn" (click)="deleteAppointment(appointment.id)">
-                    Delete
-                    </button>
-                </div>
-                </td>
+                <button
+                  class="delete-btn"
+                  (click)="deleteAppointment(appointment.id)"
+                >
+                  Delete
+                </button>
+              </td>
               </tr>
             </tbody>
           </table>

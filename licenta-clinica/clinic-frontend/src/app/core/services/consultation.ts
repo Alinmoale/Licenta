@@ -20,6 +20,15 @@ export class ConsultationService {
   createConsultation(data: any) {
     return this.http.post(this.API, data);
   }
+  updateConsultation(id: string, consultation: any) {
+    return this.http.put(
+      `${this.API}/${id}`,
+      consultation
+    );
+  }
+    deleteConsultation(id: string) {
+    return this.http.delete(`${this.API}/${id}`);
+  }
 
   sendConsultationEmail(consultationId: string) {
   return this.http.post(

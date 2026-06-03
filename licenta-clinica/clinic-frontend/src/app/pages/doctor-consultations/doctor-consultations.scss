@@ -33,6 +33,7 @@ p {
   display: grid;
   grid-template-columns: 380px 1fr;
   gap: 24px;
+  align-items: start;
 }
 
 .form-card,
@@ -47,6 +48,49 @@ p {
   display: flex;
   flex-direction: column;
   gap: 14px;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.card-actions button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.send-btn {
+  background: #10b981;
+}
+
+.edit-btn {
+  background: #2563eb;
+}
+
+.delete-btn {
+  background: #dc2626;
+}
+.send-btn,
+.edit-btn,
+.delete-btn {
+  height: 44px;
+
+  padding: 0 16px;
+
+  border: none;
+  border-radius: 10px;
+
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+
+  cursor: pointer;
 }
 
 select,
@@ -140,7 +184,3 @@ td {
   word-break: break-word;
 }
 
-.send-btn {
-  margin-top: 10px;
-  background: #10b981;
-}

@@ -10,6 +10,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import { DatePickerModule } from 'primeng/datepicker';
+import { HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-appointments',
@@ -32,6 +33,8 @@ export class Appointments implements OnInit {
   currentPage = 1;
   itemsPerPage = 10;
   patients: any[] = [];
+  openMenuId: string | null = null;
+
 
   form = {
     doctorId: '',
@@ -114,6 +117,19 @@ export class Appointments implements OnInit {
         this.errorMessage = err.error?.message || 'Doctor is not available at this time';
       }
     });
+  }
+    toggleMenu(id: string, event: Event) {
+    event.stopPropagation();
+
+    this.openMenuId =
+      this.openMenuId === id
+        ? null
+        : id;
+  }
+
+  @HostListener('document:click')
+  closeMenu() {
+    this.openMenuId = null;
   }
 
   updateStatus(id: string, status: string) {

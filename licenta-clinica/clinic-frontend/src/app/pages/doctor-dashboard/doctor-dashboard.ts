@@ -5,6 +5,7 @@ import { DoctorSidebar } from '../../shared/doctor-sidebar/doctor-sidebar';
 
 import { PatientService } from '../../core/services/patient';
 import { ConsultationService } from '../../core/services/consultation';
+import { AppointmentService } from '../../core/services/appointment';
 
 @Component({
   selector: 'app-doctor-dashboard',
@@ -17,11 +18,13 @@ export class DoctorDashboard implements OnInit {
 
   private patientService = inject(PatientService);
   private consultationService = inject(ConsultationService);
+  private appointmentService = inject(AppointmentService);
 
   user: any = null;
   patients: any[] = [];
   consultations: any[] = [];
   doctorName = '';
+  appointments: any[] = [];
 
   ngOnInit(): void {
     const storedUser = localStorage.getItem('user');
@@ -41,5 +44,10 @@ export class DoctorDashboard implements OnInit {
     this.consultationService.getConsultationsByDoctor(this.user.doctorId).subscribe({
       next: (data) => this.consultations = data
     });
+    this.appointmentService.getAppointmentsByDoctor(this.user.doctorId).subscribe({
+    next: (data) => {
+      this.appointments = data.filter(a => a.status === 'SCHEDULED');
+    }
+  });
   }
 }

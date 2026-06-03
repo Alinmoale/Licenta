@@ -36,6 +36,23 @@
 
         <div class="chart-card">
           <h3>Revenue Overview</h3>
+           <div class="chart-toggle">
+
+            <button
+              [class.active]="chartMode === 'monthly'"
+              (click)="setChartMode('monthly')"
+            >
+              Monthly
+            </button>
+
+            <button
+              [class.active]="chartMode === 'daily'"
+              (click)="setChartMode('daily')"
+            >
+              Daily
+            </button>
+
+          </div>  
 
           <canvas
             baseChart

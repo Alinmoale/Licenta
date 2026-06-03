@@ -79,7 +79,7 @@
           </small>
 
           <button (click)="saveConsultation()">
-            Save Consultation
+            {{ editingId ? 'Update Consultation' : 'Save Consultation' }}
           </button>
 
         </section>
@@ -116,12 +116,19 @@
               <p>{{ consultation.recommendations }}</p>
               </div>
 
-              <button
-                class="send-btn"
-                (click)="sendEmail(consultation.id)"
-              >
-                Send to Patient
-              </button>
+              <div class="card-actions">
+                <button class="send-btn" (click)="sendEmail(consultation.id)">
+                  Send to Patient
+                </button>
+
+                <button class="edit-btn" (click)="editConsultation(consultation)">
+                  Edit
+                </button>
+
+                <button class="delete-btn" (click)="deleteConsultation(consultation.id)">
+                  Delete
+                </button>
+              </div>
 
           </div>
 

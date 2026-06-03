@@ -24,6 +24,7 @@ export class Consultations implements OnInit {
   doctors: any[] = [];
   consultations: any[] = [];
   filteredPatients: any[] = [];
+  editingId: string | null = null;
 
   form = {
     patientId: '',
@@ -60,17 +61,58 @@ export class Consultations implements OnInit {
   }
 
   saveConsultation() {
+
+    if (this.editingId) {
+
+      this.consultationService
+        .updateConsultation(this.editingId, this.form)
+        .subscribe({
+          next: () => {
+
+            this.loadConsultationsForPatient();
+
+            this.editingId = null;
+
+            this.form.symptoms = '';
+            this.form.diagnosis = '';
+            this.form.treatment = '';
+            this.form.recommendations = '';
+          },
+          error: () => alert('Could not update consultation')
+        });
+
+      return;
+    }
+
     this.consultationService.createConsultation(this.form).subscribe({
       next: () => {
+
         this.loadConsultationsForPatient();
+
         this.form.symptoms = '';
         this.form.diagnosis = '';
         this.form.treatment = '';
         this.form.recommendations = '';
+
       },
       error: () => alert('Could not save consultation')
     });
   }
+
+  editConsultation(consultation: any) {
+
+    this.editingId = consultation.id;
+
+    this.form = {
+      doctorId: consultation.doctorId,
+      patientId: consultation.patientId,
+      symptoms: consultation.symptoms,
+      diagnosis: consultation.diagnosis,
+      treatment: consultation.treatment,
+      recommendations: consultation.recommendations 
+    };
+  }
+
   onDoctorChange() {
     this.form.patientId = '';
     this.consultations = [];
@@ -85,6 +127,42 @@ export class Consultations implements OnInit {
         this.filteredPatients = data;
       }
     });
+  }
+
+  deleteConsultation(id: string) {
+
+    if (!confirm('Delete consultation?')) {
+      return;
+    }
+
+    this.consultationService.deleteConsultation(id).subscribe({
+      next: () => {
+        this.loadConsultationsForPatient();
+      }
+    });
+  }
+  getDoctorName(doctorId: string) {
+    const doctor = this.doctors.find(d => d.id === doctorId);
+
+    return doctor
+      ? `Dr. ${doctor.firstName} ${doctor.lastName}`
+      : doctorId;
+  }
+
+  getPatientName(patientId: string) {
+    const patient = this.filteredPatients.find(p => p.id === patientId);
+
+    return patient
+      ? `${patient.firstName} ${patient.lastName}`
+      : patientId;
+  }
+  openConsultationId: string | null = null;
+
+  toggleConsultation(id: string) {
+    this.openConsultationId =
+      this.openConsultationId === id
+        ? null
+        : id;
   }
 
 

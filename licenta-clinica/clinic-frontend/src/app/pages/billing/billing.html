@@ -80,37 +80,54 @@
 
         <section class="table-card">
           <h2>Billing Records</h2>
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Patient</th>
+                  <th>Doctor</th>
+                  <th>Service</th>
+                  <th>Price</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
 
-          <table>
-            <thead>
-              <tr>
-                <th>Patient</th>
-                <th>Doctor</th>
-                <th>Service</th>
-                <th>Price</th>
-                <th>Status</th>
-              </tr>
-            </thead>
+              <tbody>
+                <tr *ngFor="let billing of billings">
+                  <td>{{ getPatientName(billing.patientId) }}</td>
+                  <td>{{ getDoctorName(billing.doctorId) }}</td>
+                  <td>{{ billing.serviceName }}</td>
+                  <td>{{ billing.price | number:'1.0-0' }} RON</td>
 
-            <tbody>
-              <tr *ngFor="let billing of billings">
-                <td>{{ getPatientName(billing.patientId) }}</td>
-                <td>{{ getDoctorName(billing.doctorId) }}</td>
-                <td>{{ billing.serviceName }}</td>
-                <td>{{ billing.price | number:'1.0-0' }} RON</td>
-
-                <td>
-                  <span
-                    class="status"
-                    [class.paid]="billing.status === 'PAID'"
-                    [class.unpaid]="billing.status === 'UNPAID'"
-                  >
-                    {{ billing.status }}
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                  <td>
+                    <select
+                      class="status-select"
+                      [(ngModel)]="billing.status"
+                      (change)="updateStatus(billing.id, billing.status)"
+                      [ngClass]="{
+                        'paid-select': billing.status === 'PAID',
+                        'unpaid-select': billing.status === 'UNPAID',
+                        'cancelled-select': billing.status === 'CANCELLED'
+                      }"
+                    >
+                      <option value="UNPAID">UNPAID</option>
+                      <option value="PAID">PAID</option>
+                      <option value="CANCELLED">CANCELLED</option>
+                    </select>
+                  </td>
+                  <td>
+                    <button
+                      class="delete-btn"
+                      (click)="deleteBilling(billing.id)"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+           </div> 
         </section>
       
 

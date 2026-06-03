@@ -13,7 +13,7 @@
       <section class="form-card">
         <h2>New Consultation</h2>
 
-        <select [(ngModel)]="form.doctorId" (change)="onDoctorChange()">
+        <select [(ngModel)]="form.doctorId" [disabled]="editingId !== null" (change)="onDoctorChange()">
           <option value="">Select doctor</option>
 
           <option *ngFor="let doctor of doctors" [value]="doctor.id">
@@ -25,6 +25,7 @@
           [(ngModel)]="form.patientId"
           (change)="loadConsultationsForPatient()"
           [disabled]="!form.doctorId"
+          [disabled]="editingId !== null"
         >
           <option value="">Select patient</option>
 
@@ -38,35 +39,102 @@
         <textarea placeholder="Treatment" [(ngModel)]="form.treatment"></textarea>
         <textarea placeholder="Recommendations" [(ngModel)]="form.recommendations"></textarea>
 
-        <button (click)="saveConsultation()">Save Consultation</button>
+        <button (click)="saveConsultation()">
+          {{ editingId ? 'Update Consultation' : 'Save Consultation' }}
+        </button>
       </section>
 
       <section class="table-card">
+
         <h2>Consultation History</h2>
 
-        <table>
-          <thead>
-            <tr>
-              <th>Symptoms</th>
-              <th>Diagnosis</th>
-              <th>Treatment</th>
-              <th>Recommendations</th>
-              <th>Date</th>
-            </tr>
-          </thead>
+        <div class="consultation-list">
 
-          <tbody>
-            <tr *ngFor="let consultation of consultations">
-              <td>{{ consultation.symptoms }}</td>
-              <td>{{ consultation.diagnosis }}</td>
-              <td>{{ consultation.treatment }}</td>
-              <td>{{ consultation.recommendations }}</td>
-              <td>
+          <div
+            class="consultation-card"
+            *ngFor="let consultation of consultations"
+          >
+            <div class="consultation-header"
+                (click)="toggleConsultation(consultation.id)">
+
+              <div class="header-left">
+                <strong>{{ consultation.diagnosis }}</strong>
+              </div>
+
+              <div class="header-right">
                 {{ consultation.createdAt | date:'dd/MM/yyyy HH:mm' }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              </div>
+
+            </div>
+
+            <div
+              class="consultation-body"
+              *ngIf="openConsultationId === consultation.id"
+            >
+                <div class="consultation-date">
+                  {{ consultation.createdAt | date:'dd/MM/yyyy HH:mm' }}
+                </div>
+
+                <div class="section">
+                  <strong>Patient</strong>
+                  <p>{{ getPatientName(consultation.patientId) }}</p>
+                </div>
+
+                <div class="section">
+                  <strong>Doctor</strong>
+                  <p>{{ getDoctorName(consultation.doctorId) }}</p>
+                </div>
+
+                <div class="section">
+                  <strong>Symptoms</strong>
+                  <p>{{ consultation.symptoms }}</p>
+                </div>
+
+                <div class="section">
+                  <strong>Diagnosis</strong>
+                  <p>{{ consultation.diagnosis }}</p>
+                </div>
+
+                <div class="section">
+                  <strong>Treatment</strong>
+                  <p>{{ consultation.treatment }}</p>
+                </div>
+
+                <div class="section">
+                  <strong>Recommendations</strong>
+                  <p>{{ consultation.recommendations }}</p>
+                </div>
+            </div>
+
+            <div class="card-actions">
+
+              <button
+                class="edit-btn"
+                (click)="editConsultation(consultation)"
+              >
+                Edit
+              </button>
+
+              <button
+                class="delete-btn"
+                (click)="deleteConsultation(consultation.id)"
+              >
+                Delete
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <p
+          class="empty-message"
+          *ngIf="form.patientId && consultations.length === 0"
+        >
+          No consultations found for this patient.
+        </p>
+
       </section>
 
     </div>

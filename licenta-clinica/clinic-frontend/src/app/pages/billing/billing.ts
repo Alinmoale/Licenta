@@ -202,4 +202,24 @@ export class Billing implements OnInit {
       ]
     };
   }
+  updateStatus(id: string, status: string) {
+    this.billingService.updateStatus(id, status).subscribe({
+      next: () => {
+        this.loadBilling();
+        this.loadRevenue();
+      }
+    });
+  }
+  deleteBilling(id: string) {
+
+    if (!confirm('Delete billing record?')) {
+      return;
+    }
+
+    this.billingService.deleteBilling(id).subscribe({
+      next: () => {
+        this.loadBilling();
+      }
+    });
+  }
 }

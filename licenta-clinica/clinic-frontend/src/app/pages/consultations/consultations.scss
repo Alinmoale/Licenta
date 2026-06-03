@@ -24,8 +24,9 @@ p {
 
 .content-grid {
   display: grid;
-  grid-template-columns: 360px 1fr;
+  grid-template-columns: 380px 1fr;
   gap: 24px;
+  align-items: start;
 }
 
 .form-card,
@@ -40,6 +41,15 @@ p {
   display: flex;
   flex-direction: column;
   gap: 14px;
+}
+.actions-cell {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.delete-btn {
+  background: #dc2626;
 }
 
 input {
@@ -59,23 +69,77 @@ button {
   cursor: pointer;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
+.consultation-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
-th {
-  text-align: left;
+.consultation-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 18px;
+  background: #ffffff;
+}
+
+.consultation-date {
+  font-size: 13px;
   color: #6b7280;
+  margin-bottom: 14px;
+}
+
+.section {
+  margin-bottom: 14px;
+}
+
+.section strong {
+  display: block;
+  color: #111827;
+  margin-bottom: 4px;
+}
+
+.section p {
+  margin: 0;
+  color: #374151;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.send-btn,
+.edit-btn,
+.delete-btn {
+  height: 44px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: 600;
   font-size: 14px;
-  padding-bottom: 14px;
+  cursor: pointer;
 }
 
-td {
-  padding: 14px 0;
-  border-top: 1px solid #e5e7eb;
+.send-btn {
+  background: #10b981;
 }
 
+.edit-btn {
+  background: #2563eb;
+}
+
+.delete-btn {
+  background: #dc2626;
+}
+
+.empty-message {
+  margin-top: 20px;
+  color: #6b7280;
+}
 .small-btn {
   padding: 8px 12px;
   margin-right: 8px;
@@ -87,6 +151,18 @@ td {
   padding: 8px 12px;
   background: #dc2626;
   font-size: 13px;
+}
+
+.consultation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  cursor: pointer;
+}
+
+.consultation-body {
+  margin-top: 16px;
 }
 
 .cancel-btn {
