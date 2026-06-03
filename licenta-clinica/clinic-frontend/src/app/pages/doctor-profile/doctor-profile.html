@@ -58,19 +58,17 @@
           <mat-form-field appearance="fill" class="date-field">
 
             <input
-              matInput
-              [matDatepicker]="startPicker"
-              [(ngModel)]="availabilityForm.startDate"
-              readonly
-              placeholder="Start date"
-            >
+            matInput
+            readonly
+            [matDatepicker]="startPicker"
+            [(ngModel)]="availabilityForm.startDate"
+            placeholder="Start date"
+            (click)="startPicker.open()"
+            (focus)="startPicker.open()"
+          />
 
-            <mat-datepicker-toggle
-              matSuffix
-              [for]="startPicker">
-            </mat-datepicker-toggle>
-
-            <mat-datepicker #startPicker></mat-datepicker>
+          <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+          <mat-datepicker #startPicker></mat-datepicker>
 
           </mat-form-field>
 
@@ -81,19 +79,17 @@
           <mat-form-field appearance="fill" class="date-field">
 
             <input
-              matInput
-              [matDatepicker]="endPicker"
-              [(ngModel)]="availabilityForm.endDate"
-              readonly
-              placeholder="End date"
-            >
+            matInput
+            readonly
+            [matDatepicker]="endPicker"
+            [(ngModel)]="availabilityForm.endDate"
+            placeholder="End date"
+            (click)="endPicker.open()"
+            (focus)="endPicker.open()"
+          />
 
-            <mat-datepicker-toggle
-              matSuffix
-              [for]="endPicker">
-            </mat-datepicker-toggle>
-
-            <mat-datepicker #endPicker></mat-datepicker>
+          <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+          <mat-datepicker #endPicker></mat-datepicker>
 
           </mat-form-field>
 

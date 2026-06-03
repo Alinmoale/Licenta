@@ -13,6 +13,8 @@ import { DoctorProfile } from './pages/doctor-profile/doctor-profile';
 import { Appointments } from './pages/appointments/appointments';
 import { DoctorAppointments } from './pages/doctor-appointments/doctor-appointments';
 import { AdminProfile } from './pages/admin-profile/admin-profile';
+import { doctorGuard } from './core/guards/doctor-guard';
+import { adminGuard } from './core/guards/admin-guard';
 
 export const routes: Routes = [
   {
@@ -23,52 +25,64 @@ export const routes: Routes = [
   // ADMIN
   {
     path: 'admin/dashboard',
-    component: AdminDashboard
+    component: AdminDashboard,
+    canActivate: [adminGuard]
   },
   {
     path: 'admin/doctors',
-    component: Doctors
+    component: Doctors,
+    canActivate: [adminGuard]
   },
   {
     path: 'admin/patients',
-    component: Patients
+    component: Patients,
+    canActivate: [adminGuard]
   },
   {
     path: 'admin/consultations',
-    component: Consultations
+    component: Consultations,
+    canActivate: [adminGuard]
   },
   {
     path: 'admin/billing',
-    component: Billing
+    component: Billing,
+    canActivate: [adminGuard]
+  },
+  {
+    path: 'admin/appointments',
+    component: Appointments,
+    canActivate: [adminGuard]
+  },
+  {
+    path: 'admin/profile',
+    component: AdminProfile,
+    canActivate: [adminGuard]
   },
 
   // DOCTOR
   {
     path: 'doctor/dashboard',
-    component: DoctorDashboard
+    component: DoctorDashboard,
+    canActivate: [doctorGuard]
   },
   {
     path: 'doctor/patients',
-    component: DoctorPatients
+    component: DoctorPatients,
+    canActivate: [doctorGuard]
   },
   {
     path: 'doctor/consultations',
-    component: DoctorConsultations
+    component: DoctorConsultations,
+    canActivate: [doctorGuard]
   },
   {
     path: 'doctor/profile',
-    component: DoctorProfile
-  },
-  {
-    path: 'admin/appointments',
-    component: Appointments
+    component: DoctorProfile,
+    canActivate: [doctorGuard]
   },
   {
     path: 'doctor/appointments',
-    component: DoctorAppointments
-  },
-  {
-    path: 'admin/profile',
-    component: AdminProfile
+    component: DoctorAppointments,
+    canActivate: [doctorGuard]
   }
 ];
