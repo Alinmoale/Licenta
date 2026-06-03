@@ -43,4 +43,20 @@ public class BillingController {
                 .mapToDouble(Billing::getPrice)
                 .sum();
     }
+    @PutMapping("/{id}/status")
+    public Billing updateBillingStatus(
+            @PathVariable String id,
+            @RequestParam String status
+    ) {
+        Billing billing = billingRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Billing not found"));
+
+        billing.setStatus(status);
+
+        return billingRepository.save(billing);
+    }
+    @DeleteMapping("/{id}")
+    public void deleteBilling(@PathVariable String id) {
+        billingRepository.deleteById(id);
+    }
 }

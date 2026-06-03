@@ -50,6 +50,36 @@ public class ConsultationController {
         return consultationRepository.save(consultation);
     }
 
+    @PutMapping("/{id}")
+        public Consultation updateConsultation(
+                @PathVariable String id,
+                @RequestBody Consultation updated
+        ) {
+
+            if (
+                    updated.getPatientId() == null || updated.getPatientId().isBlank() ||
+                    updated.getDoctorId() == null || updated.getDoctorId().isBlank() ||
+                    updated.getSymptoms() == null || updated.getSymptoms().isBlank() ||
+                    updated.getDiagnosis() == null || updated.getDiagnosis().isBlank() ||
+                    updated.getTreatment() == null || updated.getTreatment().isBlank() ||
+                    updated.getRecommendations() == null || updated.getRecommendations().isBlank()
+            ) {
+                throw new RuntimeException("All consultation fields are required");
+            }
+
+            Consultation consultation = consultationRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Consultation not found"));
+
+            consultation.setDoctorId(updated.getDoctorId());
+            consultation.setPatientId(updated.getPatientId());
+            consultation.setSymptoms(updated.getSymptoms());
+            consultation.setDiagnosis(updated.getDiagnosis());
+            consultation.setTreatment(updated.getTreatment());
+            consultation.setRecommendations(updated.getRecommendations());
+
+            return consultationRepository.save(consultation);
+        }
+
     @PostMapping("/{id}/send-email")
     public String sendConsultationEmail(@PathVariable String id) {
 
@@ -78,6 +108,10 @@ public class ConsultationController {
     @GetMapping("/patient/{patientId}")
     public List<Consultation> getByPatient(@PathVariable String patientId) {
         return consultationRepository.findByPatientId(patientId);
+    }
+    @DeleteMapping("/{id}")
+    public void deleteConsultation(@PathVariable String id) {
+        consultationRepository.deleteById(id);
     }
 
 }

@@ -42,4 +42,28 @@ public class Consultation {
     public String getRecommendations() { return recommendations; }
 
     public LocalDateTime getCreatedAt() { return createdAt; }
+
+    public void setPatientId(String patientId) {
+    this.patientId = patientId;
+    }
+
+    public void setDoctorId(String doctorId) {
+        this.doctorId = doctorId;
+    }
+
+    public void setSymptoms(String symptoms) {
+        this.symptoms = symptoms;
+    }
+
+    public void setDiagnosis(String diagnosis) {
+        this.diagnosis = diagnosis;
+    }
+
+    public void setTreatment(String treatment) {
+        this.treatment = treatment;
+    }
+
+    public void setRecommendations(String recommendations) {
+        this.recommendations = recommendations;
+    }
 }

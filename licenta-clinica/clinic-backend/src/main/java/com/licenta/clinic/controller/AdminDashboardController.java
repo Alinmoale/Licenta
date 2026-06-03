@@ -49,15 +49,28 @@ public class AdminDashboardController {
 
         Map<Integer, Double> revenueByMonth = new HashMap<>();
         Map<Integer, Long> consultationsByMonth = new HashMap<>();
+        Map<String, Double> revenueByDay = new HashMap<>();
 
         billingRepository.findAll().forEach(billing -> {
-            if ("PAID".equalsIgnoreCase(billing.getStatus()) && billing.getCreatedAt() != null) {
+
+            if ("PAID".equalsIgnoreCase(billing.getStatus())
+                    && billing.getCreatedAt() != null) {
 
                 int month = billing.getCreatedAt().getMonthValue();
 
                 revenueByMonth.put(
                         month,
-                        revenueByMonth.getOrDefault(month, 0.0) + billing.getPrice()
+                        revenueByMonth.getOrDefault(month, 0.0)
+                                + billing.getPrice()
+                );
+
+                String day =
+                        billing.getCreatedAt().toLocalDate().toString();
+
+                revenueByDay.put(
+                        day,
+                        revenueByDay.getOrDefault(day, 0.0)
+                                + billing.getPrice()
                 );
             }
         });
@@ -76,7 +89,8 @@ public class AdminDashboardController {
 
         Map<String, Object> response = new HashMap<>();
 
-        response.put("revenue", revenueByMonth);
+        response.put("revenueByMonth", revenueByMonth);
+        response.put("revenueByDay", revenueByDay);
         response.put("consultations", consultationsByMonth);
 
         return response;

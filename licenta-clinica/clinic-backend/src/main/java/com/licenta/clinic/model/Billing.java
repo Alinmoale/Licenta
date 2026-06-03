@@ -41,6 +41,8 @@ public class Billing {
     public String getServiceName() { return serviceName; }
     public double getPrice() { return price; }
     public String getStatus() { return status; }
-
+    public void setStatus(String status) {
+        this.status = status;
+    }
     public LocalDateTime getCreatedAt() { return createdAt; }
 }
