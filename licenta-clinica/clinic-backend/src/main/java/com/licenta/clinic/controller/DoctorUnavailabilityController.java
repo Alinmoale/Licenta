@@ -44,4 +44,8 @@ public class DoctorUnavailabilityController {
     public void delete(@PathVariable String id) {
         repository.deleteById(id);
     }
+    @GetMapping
+    public List<DoctorUnavailability> getAll() {
+        return repository.findAll();
+    }
 }
