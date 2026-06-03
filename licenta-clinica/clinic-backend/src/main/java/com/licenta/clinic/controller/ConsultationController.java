@@ -2,12 +2,15 @@ package com.licenta.clinic.controller;
 
 import com.licenta.clinic.dto.CreateConsultationRequest;
 import com.licenta.clinic.model.Consultation;
+import com.licenta.clinic.model.Doctor;
 import com.licenta.clinic.repository.ConsultationRepository;
 import org.springframework.web.bind.annotation.*;
 import com.licenta.clinic.model.Patient;
 import com.licenta.clinic.repository.PatientRepository;
+import com.licenta.clinic.repository.DoctorRepository;
 import com.licenta.clinic.service.EmailService;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -16,11 +19,13 @@ public class ConsultationController {
 
     private final ConsultationRepository consultationRepository;
     private final PatientRepository patientRepository;
+    private final DoctorRepository doctorRepository;
     private final EmailService emailService;
 
-    public ConsultationController(ConsultationRepository consultationRepository , PatientRepository patientRepository, EmailService emailService) {
+    public ConsultationController(ConsultationRepository consultationRepository, PatientRepository patientRepository, DoctorRepository doctorRepository, EmailService emailService) {
         this.consultationRepository = consultationRepository;
         this.patientRepository = patientRepository;
+        this.doctorRepository = doctorRepository;
         this.emailService = emailService;
     }
 
@@ -89,9 +94,21 @@ public class ConsultationController {
         Patient patient = patientRepository.findById(consultation.getPatientId())
                 .orElseThrow(() -> new RuntimeException("Patient not found"));
 
+        Doctor doctor = doctorRepository.findById(consultation.getDoctorId())
+        .orElseThrow(() -> new RuntimeException("Doctor not found"));
+
+        String doctorName =
+                "Dr. " + doctor.getFirstName() + " " + doctor.getLastName();
+
+        String consultationDate =
+                consultation.getCreatedAt()
+                        .format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
         emailService.sendConsultationEmail(
                 patient.getEmail(),
-                patient.getFirstName(),
+                patient.getFirstName() + " " + patient.getLastName(),
+                doctorName,
+                consultationDate,
                 consultation.getDiagnosis(),
                 consultation.getTreatment(),
                 consultation.getRecommendations()

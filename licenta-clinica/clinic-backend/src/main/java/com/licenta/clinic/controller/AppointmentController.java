@@ -5,6 +5,7 @@ import com.licenta.clinic.model.Appointment;
 import com.licenta.clinic.repository.AppointmentRepository;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
+import com.licenta.clinic.repository.DoctorUnavailabilityRepository;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -14,10 +15,14 @@ import java.util.List;
 public class AppointmentController {
 
     private final AppointmentRepository appointmentRepository;
-
-    public AppointmentController(AppointmentRepository appointmentRepository) {
-        this.appointmentRepository = appointmentRepository;
-    }
+    private final DoctorUnavailabilityRepository doctorUnavailabilityRepository;
+    public AppointmentController(
+        AppointmentRepository appointmentRepository,
+        DoctorUnavailabilityRepository doctorUnavailabilityRepository
+) {
+    this.appointmentRepository = appointmentRepository;
+    this.doctorUnavailabilityRepository = doctorUnavailabilityRepository;
+}
 
     @PostMapping
     public Appointment createAppointment(@RequestBody CreateAppointmentRequest request) {
@@ -100,6 +105,17 @@ public List<String> getAvailableTimes(
         @RequestParam String date
 ) {
     LocalDate appointmentDate = LocalDate.parse(date);
+        boolean doctorUnavailable = doctorUnavailabilityRepository
+                .findByDoctorId(doctorId)
+                .stream()
+                .anyMatch(unavailability ->
+                        !appointmentDate.isBefore(unavailability.getStartDate()) &&
+                        !appointmentDate.isAfter(unavailability.getEndDate())
+                );
+
+        if (doctorUnavailable) {
+        return List.of();
+        }
 
     List<String> allTimes = List.of(
             "09:00",

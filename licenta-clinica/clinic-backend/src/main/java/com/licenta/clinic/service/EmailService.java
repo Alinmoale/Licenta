@@ -16,6 +16,8 @@ public class EmailService {
     public void sendConsultationEmail(
             String to,
             String patientName,
+            String doctorName,
+            String consultationDate,
             String diagnosis,
             String treatment,
             String recommendations
@@ -27,18 +29,32 @@ public class EmailService {
 
         message.setText(
                 "Hello " + patientName + ",\n\n" +
-                "Here is your medical consultation summary:\n\n" +
 
-                "Diagnosis:\n" +
+                "Following your recent consultation, please find below the summary provided by your doctor.\n\n" +
+
+                "Patient: " + patientName + "\n" +
+                "Doctor: " + doctorName + "\n" +
+                "Date: " + consultationDate + "\n\n" +
+
+                "━━━━━━━━━━━━━━━━━━\n" +
+                "DIAGNOSIS\n" +
+                "━━━━━━━━━━━━━━━━━━\n\n" +
                 diagnosis + "\n\n" +
 
-                "Treatment:\n" +
+                "━━━━━━━━━━━━━━━━━━\n" +
+                "TREATMENT PLAN\n" +
+                "━━━━━━━━━━━━━━━━━━\n\n" +
                 treatment + "\n\n" +
 
-                "Recommendations:\n" +
+                "━━━━━━━━━━━━━━━━━━\n" +
+                "RECOMMENDATIONS\n" +
+                "━━━━━━━━━━━━━━━━━━\n\n" +
                 recommendations + "\n\n" +
 
-                "Best regards,\nMedical Clinic"
+                "If your symptoms worsen or you have any concerns, please contact your doctor or schedule a follow-up consultation.\n\n" +
+
+                "Best regards,\n" +
+                "Medical Clinic"
         );
 
         mailSender.send(message);
