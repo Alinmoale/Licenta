@@ -1,42 +1,63 @@
 <aside class="sidebar">
 
+  <div class="mobile-topbar">
+    <div class="mobile-logo">
+      <span class="material-icons">medical_services</span>
+      Doctor Panel
+    </div>
+
+    <button
+      class="menu-toggle"
+      type="button"
+      (click)="toggleMenu()"
+      [attr.aria-expanded]="isMenuOpen"
+      aria-label="Toggle navigation menu"
+    >
+      <span class="material-icons">menu</span>
+    </button>
+  </div>
+
   <div class="logo">
     <span class="material-icons">medical_services</span>
     Doctor Panel
   </div>
 
-  <nav>
+  <div class="sidebar-menu" [class.open]="isMenuOpen">
 
-    <a routerLink="/doctor/dashboard">
-      <span class="material-icons">dashboard</span>
-      Dashboard
-    </a>
+    <nav>
 
-    <a routerLink="/doctor/patients">
-      <span class="material-icons">groups</span>
-       Patients
-    </a>
+      <a routerLink="/doctor/dashboard" (click)="closeMenu()">
+        <span class="material-icons">dashboard</span>
+        Dashboard
+      </a>
 
-    <a routerLink="/doctor/appointments">
-      <span class="material-icons">event</span>
-       Appointments
-    </a>
+      <a routerLink="/doctor/patients" (click)="closeMenu()">
+        <span class="material-icons">groups</span>
+        Patients
+      </a>
 
-    <a routerLink="/doctor/consultations">
-      <span class="material-icons">description</span>
-       Consultations
-    </a>
+      <a routerLink="/doctor/appointments" (click)="closeMenu()">
+        <span class="material-icons">event</span>
+        Appointments
+      </a>
 
-    <a routerLink="/doctor/profile">
-      <span class="material-icons">person</span>
-      Profile
-    </a>
+      <a routerLink="/doctor/consultations" (click)="closeMenu()">
+        <span class="material-icons">description</span>
+        Consultations
+      </a>
 
-  </nav>
+      <a routerLink="/doctor/profile" (click)="closeMenu()">
+        <span class="material-icons">person</span>
+        Profile
+      </a>
 
-  <button class="logout-btn" (click)="logout()">
-    <span class="material-icons">logout</span>
-    Logout
-  </button>
+    </nav>
+
+    <button class="logout-btn" (click)="logout()">
+      <span class="material-icons">logout</span>
+      Logout
+    </button>
+
+  </div>
 
 </aside>

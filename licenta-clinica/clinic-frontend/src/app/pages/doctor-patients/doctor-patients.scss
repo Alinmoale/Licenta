@@ -22,7 +22,7 @@ p {
 
 .content-grid {
   display: grid;
-  grid-template-columns: 360px 1fr;
+  grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
   gap: 24px;
 }
 
@@ -32,6 +32,7 @@ p {
   border-radius: 18px;
   padding: 24px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  min-width: 0;
 }
 
 .form-card {
@@ -91,6 +92,7 @@ button {
 
 table {
   width: 100%;
+  min-width: 720px;
   border-collapse: collapse;
 }
 
@@ -107,8 +109,39 @@ td {
 }
 .main-content {
   flex: 1;
+  min-width: 0;
 }
 .layout {
   display: flex;
+  min-height: 100vh;
   background: #f5f7fb;
+}
+
+.table-card {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+@media (max-width: 1024px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .doctor-page {
+    padding: 20px;
+  }
+
+  .topbar {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .form-card,
+  .table-card {
+    width: 100%;
+    padding: 20px;
+  }
 }

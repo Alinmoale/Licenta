@@ -6,8 +6,11 @@
 
 .main-content {
   flex: 1;
-  padding: 32px;
   min-width: 0;
+}
+
+.page {
+  padding: 32px;
 }
 
 h1 {
@@ -22,7 +25,7 @@ p {
 
 .content-grid {
   display: grid;
-  grid-template-columns: repeat(2, 420px);
+  grid-template-columns: repeat(2, minmax(0, 420px));
   gap: 24px;
 }
 
@@ -65,12 +68,23 @@ button {
   background: #111827;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1024px) {
   .layout {
     flex-direction: column;
   }
 
   .content-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .page {
+    padding: 20px;
+  }
+
+  .form-card {
+    width: 100%;
+    padding: 20px;
   }
 }

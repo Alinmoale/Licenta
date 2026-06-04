@@ -4,6 +4,8 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
+  width: 100%;
+  max-width: 100%;
   overflow-x: hidden;
 
   font-family: 'Inter', sans-serif;
@@ -19,6 +21,19 @@ select {
 
 * {
   box-sizing: border-box;
+}
+
+app-root {
+  display: block;
+  min-height: 100%;
+  width: 100%;
+  overflow-x: clip;
+}
+
+canvas,
+img,
+svg {
+  max-width: 100%;
 }
 
 .datepicker-wrapper {
@@ -123,6 +138,132 @@ select {
   pointer-events: none;
 }
 
-.content-grid{
+.content-grid {
   margin-top: 40px;
+}
+
+.layout,
+.main-content,
+.page,
+.doctor-page,
+.content-grid,
+.form-card,
+.table-card,
+.card,
+.stat-card,
+.chart-card,
+.consultation-card,
+.leave-card {
+  min-width: 0;
+}
+
+.layout {
+  width: 100%;
+  max-width: 100vw;
+}
+
+.main-content {
+  width: 100%;
+  overflow-x: clip;
+}
+
+.table-card {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.table-card table {
+  min-width: 720px;
+}
+
+.chart-card {
+  width: 100%;
+  overflow: hidden;
+}
+
+.chart-card canvas {
+  display: block;
+  width: 100% !important;
+  max-width: 100%;
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  body .layout .main-content .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  body .layout .cards,
+  body .layout .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  body .layout .charts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  body .layout .form-card,
+  body .layout .table-card,
+  body .layout .card,
+  body .layout .stat-card,
+  body .layout .chart-card,
+  body .layout .consultation-card,
+  body .layout .leave-card {
+    width: 100%;
+  }
+}
+
+@media (max-width: 900px) {
+  body .layout {
+    flex-direction: column;
+  }
+
+  body .layout .main-content {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  body .layout .page,
+  body .layout .doctor-page {
+    padding: 20px;
+  }
+
+  body .layout .content-grid,
+  body .layout .charts-grid,
+  body .layout .cards,
+  body .layout .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  body .layout .form-card,
+  body .layout .table-card,
+  body .layout .card,
+  body .layout .stat-card,
+  body .layout .chart-card,
+  body .layout .consultation-card,
+  body .layout .leave-card {
+    width: 100%;
+  }
+
+  body .layout .topbar,
+  body .layout .section-header,
+  body .layout .leave-item,
+  body .layout .unavailability-item,
+  body .layout .card-actions,
+  body .layout .pagination {
+    flex-wrap: wrap;
+  }
+
+  body .layout .topbar {
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  body .layout .pagination {
+    justify-content: flex-start;
+  }
+
+  body .layout .chart-card canvas {
+    height: 260px !important;
+  }
 }

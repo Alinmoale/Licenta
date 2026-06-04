@@ -6,7 +6,13 @@
       Admin Panel
     </div>
 
-    <button class="menu-toggle" (click)="toggleMenu()">
+    <button
+      class="menu-toggle"
+      type="button"
+      (click)="toggleMenu()"
+      [attr.aria-expanded]="isMenuOpen"
+      aria-label="Toggle navigation menu"
+    >
       <span class="material-icons">menu</span>
     </button>
   </div>
@@ -20,37 +26,37 @@
 
     <nav>
 
-      <a routerLink="/admin/dashboard">
+      <a routerLink="/admin/dashboard" (click)="closeMenu()">
         <span class="material-icons">dashboard</span>
         Dashboard
       </a>
 
-      <a routerLink="/admin/doctors">
+      <a routerLink="/admin/doctors" (click)="closeMenu()">
         <span class="material-icons">medical_services</span>
         Doctors
       </a>
 
-      <a routerLink="/admin/patients">
+      <a routerLink="/admin/patients" (click)="closeMenu()">
         <span class="material-icons">groups</span>
         Patients
       </a>
 
-      <a routerLink="/admin/appointments">
+      <a routerLink="/admin/appointments" (click)="closeMenu()">
         <span class="material-icons">event</span>
         Appointments
       </a>
 
-      <a routerLink="/admin/consultations">
+      <a routerLink="/admin/consultations" (click)="closeMenu()">
         <span class="material-icons">description</span>
         Consultations
       </a>
 
-      <a routerLink="/admin/billing">
+      <a routerLink="/admin/billing" (click)="closeMenu()">
         <span class="material-icons">payments</span>
         Billing
       </a>
 
-      <a routerLink="/admin/profile">
+      <a routerLink="/admin/profile" (click)="closeMenu()">
         <span class="material-icons">person</span>
         Profile
       </a>

@@ -68,6 +68,8 @@ button {
   border-radius: 18px;
   padding: 24px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  max-width: 100%;
+  overflow-x: auto;
 }
 
 .section-header {
@@ -79,6 +81,7 @@ button {
 
 table {
   width: 100%;
+  min-width: 720px;
   border-collapse: collapse;
 }
 
@@ -95,8 +98,42 @@ td {
 }
 .main-content {
   flex: 1;
+  min-width: 0;
 }
 .layout {
   display: flex;
+  min-height: 100vh;
   background: #f5f7fb;
+}
+
+@media (max-width: 1024px) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .doctor-page {
+    padding: 20px;
+  }
+
+  .topbar,
+  .section-header {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .card,
+  .table-card {
+    width: 100%;
+  }
+
+  .table-card {
+    padding: 20px;
+  }
 }

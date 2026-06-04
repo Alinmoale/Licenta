@@ -10,11 +10,20 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './doctor-sidebar.scss'
 })
 export class DoctorSidebar {
+  isMenuOpen = false;
 
   constructor(private router: Router) {}
 
   logout() {
     localStorage.removeItem('user');
     this.router.navigate(['/']);
+  }
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  closeMenu() {
+    this.isMenuOpen = false;
   }
 }
