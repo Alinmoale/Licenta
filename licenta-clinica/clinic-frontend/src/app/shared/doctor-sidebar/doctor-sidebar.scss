@@ -83,19 +83,20 @@ nav a:hover {
 @media (max-width: 900px) {
   .sidebar {
     width: 100%;
+    height: auto;
     min-height: auto;
-    padding: 16px;
+    position: relative;
   }
 
   nav {
+    display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 8px;
   }
 
   nav a {
-    font-size: 13px;
-    padding: 10px;
+    flex: 1 1 140px;
   }
 
   .logout-btn {

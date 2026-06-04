@@ -9,12 +9,17 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.scss'
 })
+
 export class Sidebar {
+  isMenuOpen = false;
 
   constructor(private router: Router) {}
 
   logout() {
     localStorage.removeItem('user');
     this.router.navigate(['/']);
+  }
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
   }
 }

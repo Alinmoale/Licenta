@@ -11,7 +11,7 @@ Chart.register(...registerables);
   standalone: true,
   imports: [CommonModule, Sidebar, BaseChartDirective],
   templateUrl: './admin-dashboard.html',
-  styleUrl: './admin-dashboard.scss'
+  styleUrl: './admin-dashboard.scss',
 })
 
 export class AdminDashboard implements OnInit {
