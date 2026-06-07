@@ -42,7 +42,11 @@
 
           <input type="number" placeholder="Age" [(ngModel)]="form.age">
 
-          <input placeholder="Gender" [(ngModel)]="form.gender">
+          <select [(ngModel)]="form.gender">
+            <option value="">Select gender</option>
+            <option value="MALE">Male</option>
+            <option value="FEMALE">Female</option>
+          </select>
           <input placeholder="Address" [(ngModel)]="form.address">
 
           <textarea
