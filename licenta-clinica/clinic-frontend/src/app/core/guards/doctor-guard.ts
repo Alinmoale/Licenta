@@ -5,7 +5,7 @@ export const doctorGuard: CanActivateFn = () => {
   const router = inject(Router);
   const user = JSON.parse(localStorage.getItem('user') || 'null');
 
-  if (!user || user.role !== 'DOCTOR') {
+  if (!user?.token || user.role !== 'DOCTOR') {
     router.navigate(['/login']);
     return false;
   }

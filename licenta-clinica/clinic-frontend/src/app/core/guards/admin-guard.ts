@@ -5,7 +5,7 @@ export const adminGuard: CanActivateFn = () => {
   const router = inject(Router);
   const user = JSON.parse(localStorage.getItem('user') || 'null');
 
-  if (!user || user.role !== 'ADMIN') {
+  if (!user?.token || user.role !== 'ADMIN') {
     router.navigate(['/login']);
     return false;
   }
