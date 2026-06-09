@@ -147,6 +147,13 @@ export class DoctorAppointments implements OnInit {
     const patient = this.patients.find(p => p.id === patientId);
     return patient ? `${patient.firstName} ${patient.lastName}` : patientId;
   }
+
+  updateStatus(id: string, status: string) {
+    this.appointmentService.updateStatus(id, status).subscribe({
+      next: () => this.loadAppointments()
+    });
+  }
+
   dateFilter = (date: Date | null): boolean => {
 
     if (!date) return false;

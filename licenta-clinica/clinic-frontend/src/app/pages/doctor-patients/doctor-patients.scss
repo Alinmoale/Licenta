@@ -42,11 +42,25 @@ p {
 }
 
 input,
+select,
 textarea {
   padding: 13px;
   border: 1px solid #e5e7eb;
   border-radius: 10px;
   font-size: 14px;
+}
+
+select {
+  cursor: pointer;
+  padding: 13px 42px 13px 13px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: white;
+  background-image: url('../../assets/arrow-right-bold.svg');
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 14px;
 }
 
 textarea {

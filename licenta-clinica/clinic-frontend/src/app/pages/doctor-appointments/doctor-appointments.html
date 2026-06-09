@@ -121,14 +121,20 @@
 
                 <td>
 
-                  <span
-                    class="status"
-                    [class.scheduled]="appointment.status === 'SCHEDULED'"
-                    [class.completed]="appointment.status === 'COMPLETED'"
-                    [class.cancelled]="appointment.status === 'CANCELLED'"
+                  <select
+                    class="status-select"
+                    [(ngModel)]="appointment.status"
+                    (change)="updateStatus(appointment.id, appointment.status)"
+                    [ngClass]="{
+                      'scheduled-select': appointment.status === 'SCHEDULED',
+                      'completed-select': appointment.status === 'COMPLETED',
+                      'cancelled-select': appointment.status === 'CANCELLED'
+                    }"
                   >
-                    {{ appointment.status }}
-                  </span>
+                    <option value="SCHEDULED">SCHEDULED</option>
+                    <option value="COMPLETED">COMPLETED</option>
+                    <option value="CANCELLED">CANCELLED</option>
+                  </select>
 
                 </td>
 
