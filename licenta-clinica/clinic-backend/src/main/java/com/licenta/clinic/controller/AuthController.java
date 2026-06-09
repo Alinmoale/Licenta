@@ -6,6 +6,8 @@ import com.licenta.clinic.model.Doctor;
 import com.licenta.clinic.model.User;
 import com.licenta.clinic.repository.DoctorRepository;
 import com.licenta.clinic.repository.UserRepository;
+import com.licenta.clinic.service.JwtService;
+import com.licenta.clinic.service.PasswordService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,10 +16,19 @@ public class AuthController {
 
     private final UserRepository userRepository;
     private final DoctorRepository doctorRepository;
+    private final PasswordService passwordService;
+    private final JwtService jwtService;
 
-    public AuthController(UserRepository userRepository, DoctorRepository doctorRepository) {
+    public AuthController(
+            UserRepository userRepository,
+            DoctorRepository doctorRepository,
+            PasswordService passwordService,
+            JwtService jwtService
+    ) {
         this.userRepository = userRepository;
         this.doctorRepository = doctorRepository;
+        this.passwordService = passwordService;
+        this.jwtService = jwtService;
     }
 
     @PostMapping("/login")
@@ -25,7 +36,7 @@ public class AuthController {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("Invalid email or password"));
 
-        if (!user.getPassword().equals(request.getPassword())) {
+        if (!passwordService.matchesAndUpgrade(user, request.getPassword())) {
             throw new RuntimeException("Invalid email or password");
         }
 
@@ -45,7 +56,8 @@ public class AuthController {
                 user.getEmail(),
                 user.getRole(),
                 doctorId,
-                displayName
+                displayName,
+                jwtService.generateToken(user)
         );
     }
 }

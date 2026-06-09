@@ -5,6 +5,7 @@ import com.licenta.clinic.model.Doctor;
 import com.licenta.clinic.model.User;
 import com.licenta.clinic.repository.DoctorRepository;
 import com.licenta.clinic.repository.UserRepository;
+import com.licenta.clinic.service.PasswordService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -13,13 +14,16 @@ public class DoctorProfileController {
 
     private final DoctorRepository doctorRepository;
     private final UserRepository userRepository;
+    private final PasswordService passwordService;
 
     public DoctorProfileController(
             DoctorRepository doctorRepository,
-            UserRepository userRepository
+            UserRepository userRepository,
+            PasswordService passwordService
     ) {
         this.doctorRepository = doctorRepository;
         this.userRepository = userRepository;
+        this.passwordService = passwordService;
     }
 
     @GetMapping("/{doctorId}")
@@ -67,11 +71,11 @@ public class DoctorProfileController {
         User user = userRepository.findById(doctor.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        if (!user.getPassword().equals(request.getCurrentPassword())) {
+        if (!passwordService.matchesAndUpgrade(user, request.getCurrentPassword())) {
             throw new RuntimeException("Current password is incorrect");
         }
 
-        user.setPassword(request.getNewPassword());
+        user.setPassword(passwordService.encode(request.getNewPassword()));
         userRepository.save(user);
 
         return "Password changed successfully";

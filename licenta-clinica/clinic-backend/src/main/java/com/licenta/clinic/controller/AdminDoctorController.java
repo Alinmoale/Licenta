@@ -5,6 +5,7 @@ import com.licenta.clinic.model.Doctor;
 import com.licenta.clinic.model.User;
 import com.licenta.clinic.repository.DoctorRepository;
 import com.licenta.clinic.repository.UserRepository;
+import com.licenta.clinic.service.PasswordService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,10 +16,16 @@ public class AdminDoctorController {
 
     private final UserRepository userRepository;
     private final DoctorRepository doctorRepository;
+    private final PasswordService passwordService;
 
-    public AdminDoctorController(UserRepository userRepository, DoctorRepository doctorRepository) {
+    public AdminDoctorController(
+            UserRepository userRepository,
+            DoctorRepository doctorRepository,
+            PasswordService passwordService
+    ) {
         this.userRepository = userRepository;
         this.doctorRepository = doctorRepository;
+        this.passwordService = passwordService;
     }
 
     @PostMapping
@@ -31,7 +38,7 @@ public class AdminDoctorController {
         User user = new User(
                 request.getUsername(),
                 request.getEmail(),
-                request.getPassword(),
+                passwordService.encode(request.getPassword()),
                 "DOCTOR"
         );
 
