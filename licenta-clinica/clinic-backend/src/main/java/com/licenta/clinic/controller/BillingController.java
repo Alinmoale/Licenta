@@ -18,6 +18,7 @@ public class BillingController {
 
     @PostMapping
     public Billing create(@RequestBody Billing billing) {
+        billing.setStatus("UNPAID");
         return billingRepository.save(billing);
     }
 

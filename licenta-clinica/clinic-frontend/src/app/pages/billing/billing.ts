@@ -37,8 +37,7 @@ export class Billing implements OnInit {
     doctorId: '',
     consultationId: '',
     serviceName: '',
-    price: 0,
-    status: 'UNPAID'
+    price: 0
   };
 
   ngOnInit(): void {
@@ -89,8 +88,7 @@ export class Billing implements OnInit {
       doctorId: '',
       consultationId: '',
       serviceName: '',
-      price: 0,
-      status: 'UNPAID'
+      price: 0
     };
   }
 
