@@ -36,6 +36,10 @@ public class AppointmentController {
             throw new RuntimeException("All appointment fields are required");
         }
 
+        if (request.getAppointmentDate().isBefore(LocalDate.now())) {
+            throw new RuntimeException("Appointment date cannot be in the past");
+        }
+
         LocalTime endTime = request.getStartTime().plusHours(1);
 
         List<Appointment> doctorAppointments =
@@ -145,4 +149,3 @@ public List<String> getAvailableTimes(
             .toList();
 }
 }
-
