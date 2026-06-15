@@ -34,6 +34,7 @@ export class Appointments implements OnInit {
   itemsPerPage = 10;
   patients: any[] = [];
   openMenuId: string | null = null;
+  today = new Date();
 
 
   form = {
@@ -214,12 +215,21 @@ export class Appointments implements OnInit {
     if (!date) return false;
 
     const day = date.getDay();
+    const isPastDate = this.startOfDay(date) < this.startOfDay(this.today);
 
     // 0 = Sunday
     // 6 = Saturday
 
-    return day !== 0 && day !== 6;
+    return !isPastDate && day !== 0 && day !== 6;
   };
+
+  private startOfDay(date: Date): number {
+    const normalizedDate = new Date(date);
+    normalizedDate.setHours(0, 0, 0, 0);
+
+    return normalizedDate.getTime();
+  }
+
   get paginatedAppointments() {
   const start = (this.currentPage - 1) * this.itemsPerPage;
   return this.appointments.slice(start, start + this.itemsPerPage);

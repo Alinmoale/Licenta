@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { DashboardService } from '../../core/services/dashboard';
 import { Sidebar } from '../../shared/sidebar/sidebar';
 import { BaseChartDirective } from 'ng2-charts';
@@ -9,7 +10,7 @@ Chart.register(...registerables);
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
-  imports: [CommonModule, Sidebar, BaseChartDirective],
+  imports: [CommonModule, RouterLink, Sidebar, BaseChartDirective],
   templateUrl: './admin-dashboard.html',
   styleUrl: './admin-dashboard.scss',
 })

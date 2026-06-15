@@ -24,8 +24,7 @@
         <select
           [(ngModel)]="form.patientId"
           (change)="loadConsultationsForPatient()"
-          [disabled]="!form.doctorId"
-          [disabled]="editingId !== null"
+          [disabled]="!form.doctorId || editingId !== null"
         >
           <option value="">Select patient</option>
 
@@ -44,7 +43,7 @@
         </button>
       </section>
 
-      <section class="table-card">
+      <section class="table-card" *ngIf="form.doctorId && form.patientId">
 
         <h2>Consultation History</h2>
 
@@ -132,7 +131,7 @@
           class="empty-message"
           *ngIf="form.patientId && consultations.length === 0"
         >
-          No consultations found for this patient.
+          This patient has no consultation history.
         </p>
 
       </section>

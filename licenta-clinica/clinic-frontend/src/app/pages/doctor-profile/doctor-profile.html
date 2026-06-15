@@ -61,10 +61,13 @@
             matInput
             readonly
             [matDatepicker]="startPicker"
+            [matDatepickerFilter]="futureDateFilter"
+            [min]="today"
             [(ngModel)]="availabilityForm.startDate"
             placeholder="Start date"
             (click)="startPicker.open()"
             (focus)="startPicker.open()"
+            (dateChange)="onStartDateChange()"
           />
 
           <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
@@ -82,6 +85,8 @@
             matInput
             readonly
             [matDatepicker]="endPicker"
+            [matDatepickerFilter]="endDateFilter"
+            [min]="today"
             [(ngModel)]="availabilityForm.endDate"
             placeholder="End date"
             (click)="endPicker.open()"

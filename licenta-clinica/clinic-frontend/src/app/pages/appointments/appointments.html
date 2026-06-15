@@ -35,6 +35,7 @@
             readonly
             [matDatepicker]="picker"
             [matDatepickerFilter]="dateFilter"
+            [min]="today"
             placeholder="Select date"
             [(ngModel)]="form.appointmentDate"
             [disabled]="!form.doctorId || !form.patientId"

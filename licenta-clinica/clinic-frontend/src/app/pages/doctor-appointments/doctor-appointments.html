@@ -14,6 +14,25 @@
         <button routerLink="/doctor/dashboard">Back to Dashboard</button>
       </header>
 
+      <section class="cards" *ngIf="hasAppointmentStats">
+
+        <div class="card blue" *ngIf="scheduledCount > 0">
+          <span>Scheduled Appointments</span>
+          <strong>{{ scheduledCount }}</strong>
+        </div>
+
+        <div class="card green" *ngIf="completedCount > 0">
+          <span>Completed Appointments</span>
+          <strong>{{ completedCount }}</strong>
+        </div>
+
+        <div class="card red" *ngIf="cancelledCount > 0">
+          <span>Cancelled Appointments</span>
+          <strong>{{ cancelledCount }}</strong>
+        </div>
+
+      </section>
+
       <div class="content-grid">
 
         <section class="form-card">
@@ -45,6 +64,7 @@
                 readonly
                 [matDatepicker]="picker"
                 [matDatepickerFilter]="dateFilter"
+                [min]="today"
                 placeholder="Select date"
                 [(ngModel)]="form.appointmentDate"
                 [disabled]="!form.patientId"

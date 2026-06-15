@@ -84,7 +84,7 @@
 
         </section>
 
-        <section class="table-card">
+        <section class="table-card" *ngIf="selectedPatientId">
 
           <h2>Consultation History</h2>
 
@@ -135,7 +135,7 @@
           </div>
 
           <p class="empty-message" *ngIf="selectedPatientId && consultations.length === 0">
-            No consultations found for this patient.
+            This patient has no consultation history.
           </p>
 
         </section>

@@ -65,6 +65,43 @@
   align-items: start;
 }
 
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 260px));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.card {
+  padding: 28px;
+  border-radius: 18px;
+  color: white;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+}
+
+.card span {
+  display: block;
+  font-size: 14px;
+  opacity: 0.9;
+  margin-bottom: 12px;
+}
+
+.card strong {
+  font-size: 36px;
+}
+
+.blue {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+}
+
+.green {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.red {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
 .form-card {
   background: white;
   border-radius: 18px;
@@ -387,6 +424,10 @@ button {
 }
 
 @media (max-width: 1024px) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .content-grid {
     grid-template-columns: 1fr;
   }
@@ -404,9 +445,14 @@ button {
   }
 
   .form-card,
+  .card,
   .table-card {
     width: 100%;
     padding: 20px;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
   }
 
   .time-grid {

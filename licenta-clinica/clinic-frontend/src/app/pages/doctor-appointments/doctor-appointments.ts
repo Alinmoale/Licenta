@@ -39,6 +39,7 @@ export class DoctorAppointments implements OnInit {
   selectedTime = '';
   currentPage = 1;
   itemsPerPage = 10;
+  today = new Date();
 
 
   form = {
@@ -154,14 +155,46 @@ export class DoctorAppointments implements OnInit {
     });
   }
 
+  get scheduledCount() {
+    return this.countAppointmentsByStatus('SCHEDULED');
+  }
+
+  get completedCount() {
+    return this.countAppointmentsByStatus('COMPLETED');
+  }
+
+  get cancelledCount() {
+    return this.countAppointmentsByStatus('CANCELLED');
+  }
+
+  get hasAppointmentStats() {
+    return this.scheduledCount > 0 ||
+      this.completedCount > 0 ||
+      this.cancelledCount > 0;
+  }
+
   dateFilter = (date: Date | null): boolean => {
 
     if (!date) return false;
 
     const day = date.getDay();
+    const isPastDate = this.startOfDay(date) < this.startOfDay(this.today);
 
-    return day !== 0 && day !== 6;
+    return !isPastDate && day !== 0 && day !== 6;
   };
+
+  private startOfDay(date: Date): number {
+    const normalizedDate = new Date(date);
+    normalizedDate.setHours(0, 0, 0, 0);
+
+    return normalizedDate.getTime();
+  }
+
+  private countAppointmentsByStatus(status: string): number {
+    return this.appointments.filter(appointment =>
+      appointment.status?.toUpperCase() === status
+    ).length;
+  }
 
   get paginatedAppointments() {
   const start = (this.currentPage - 1) * this.itemsPerPage;

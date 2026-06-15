@@ -11,25 +11,25 @@
 
       <div class="cards mt-4" *ngIf="stats">
 
-        <div class="card red">
+        <a class="card red" routerLink="/admin/doctors">
           <span>Doctors</span>
           <strong>{{ stats.totalDoctors }}</strong>
-        </div>
+        </a>
 
-        <div class="card blue">
+        <a class="card blue" routerLink="/admin/patients">
           <span>Patients</span>
           <strong>{{ stats.totalPatients }}</strong>
-        </div>
+        </a>
 
-        <div class="card yellow">
+        <a class="card yellow" routerLink="/admin/consultations">
           <span>Consultations</span>
           <strong>{{ stats.totalConsultations }}</strong>
-        </div>
+        </a>
 
-        <div class="card green">
+        <a class="card green" routerLink="/admin/billing">
           <span>Revenue</span>
           <strong>{{ stats.revenue | number:'1.0-0' }} RON</strong>
-        </div>
+        </a>
 
       </div>
       <div class="charts-grid">

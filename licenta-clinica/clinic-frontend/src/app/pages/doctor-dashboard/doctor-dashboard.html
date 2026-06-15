@@ -16,15 +16,15 @@
         </header>
 
         <section class="cards">
-            <div class="card blue">
+            <a class="card blue" routerLink="/doctor/patients">
             <span>My Patients</span>
             <strong>{{ patients.length }}</strong>
-            </div>
+            </a>
 
-            <div class="card green">
+            <a class="card green" routerLink="/doctor/appointments">
             <span>Scheduled Appointments</span>
             <strong>{{ appointments.length }}</strong>
-            </div>
+            </a>
         </section>
 
         <section class="table-card">

@@ -26,8 +26,13 @@ export class DoctorProfile implements OnInit {
 
   user: any = null;
   unavailabilityList: any[] = [];
+  today = new Date();
 
-  availabilityForm = {
+  availabilityForm: {
+    startDate: Date | string;
+    endDate: Date | string;
+    reason: string;
+  } = {
     startDate: '',
     endDate: '',
     reason: ''
@@ -133,6 +138,53 @@ export class DoctorProfile implements OnInit {
       }
     });
   }
+
+  futureDateFilter = (date: Date | null): boolean => {
+    if (!date) {
+      return false;
+    }
+
+    return this.startOfDay(date) >= this.startOfDay(this.today);
+  };
+
+  endDateFilter = (date: Date | null): boolean => {
+    if (!this.futureDateFilter(date)) {
+      return false;
+    }
+
+    const startDate = this.toDate(this.availabilityForm.startDate);
+
+    if (!startDate || !date) {
+      return true;
+    }
+
+    return this.startOfDay(date) >= this.startOfDay(startDate);
+  };
+
+  onStartDateChange() {
+    const startDate = this.toDate(this.availabilityForm.startDate);
+    const endDate = this.toDate(this.availabilityForm.endDate);
+
+    if (startDate && endDate && this.startOfDay(endDate) < this.startOfDay(startDate)) {
+      this.availabilityForm.endDate = '';
+    }
+  }
+
+  private toDate(value: Date | string): Date | null {
+    if (!value) {
+      return null;
+    }
+
+    return value instanceof Date ? value : new Date(value);
+  }
+
+  private startOfDay(date: Date): number {
+    const normalizedDate = new Date(date);
+    normalizedDate.setHours(0, 0, 0, 0);
+
+    return normalizedDate.getTime();
+  }
+
   deleteUnavailability(id: string) {
 
     if (!confirm('Delete this unavailability period?')) {

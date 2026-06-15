@@ -53,7 +53,12 @@ export class Consultations implements OnInit {
   }
 
   loadConsultationsForPatient() {
-    if (!this.form.patientId) return;
+    this.openConsultationId = null;
+
+    if (!this.form.patientId) {
+      this.consultations = [];
+      return;
+    }
 
     this.consultationService.getConsultationsByPatient(this.form.patientId).subscribe({
       next: (data) => this.consultations = data
@@ -117,6 +122,7 @@ export class Consultations implements OnInit {
     this.form.patientId = '';
     this.consultations = [];
     this.filteredPatients = [];
+    this.openConsultationId = null;
 
     if (!this.form.doctorId) {
       return;
