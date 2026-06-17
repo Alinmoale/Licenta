@@ -59,4 +59,44 @@ public class EmailService {
 
         mailSender.send(message);
     }
+
+    public void sendInvoiceEmail(
+            String to,
+            String patientName,
+            String doctorName,
+            String serviceName,
+            String amount,
+            String billingStatus,
+            String billingDate
+    ) {
+        SimpleMailMessage message = new SimpleMailMessage();
+
+        message.setTo(to);
+        message.setSubject("Invoice Receipt - Medical Clinic");
+
+        message.setText(
+                "Hello " + patientName + ",\n\n" +
+
+                "Thank you for your payment.\n\n" +
+
+                "Invoice Details\n" +
+                "━━━━━━━━━━━━━━━━━━\n\n" +
+
+                "Patient: " + patientName + "\n" +
+                "Doctor: " + doctorName + "\n" +
+                "Service: " + serviceName + "\n" +
+                "Amount: " + amount + " RON\n" +
+                "Status: " + billingStatus + "\n" +
+                "Date: " + billingDate + "\n\n" +
+
+                "━━━━━━━━━━━━━━━━━━\n\n" +
+
+                "This email serves as confirmation of your payment.\n\n" +
+
+                "Best regards,\n" +
+                "Medical Clinic"
+        );
+
+        mailSender.send(message);
+    }
 }
