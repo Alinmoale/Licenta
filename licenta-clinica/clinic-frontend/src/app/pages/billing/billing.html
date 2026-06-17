@@ -117,6 +117,14 @@
                     >
                       Delete
                     </button>
+
+                    <button
+                      class="send-btn"
+                      *ngIf="billing.status === 'PAID'"
+                      (click)="sendInvoice(billing.id)"
+                    >
+                      Send Invoice
+                    </button>
                   </td>
                 </tr>
               </tbody>

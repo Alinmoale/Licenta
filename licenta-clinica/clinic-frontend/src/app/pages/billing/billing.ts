@@ -208,6 +208,18 @@ export class Billing implements OnInit {
       }
     });
   }
+
+  sendInvoice(id: string) {
+    this.billingService.sendInvoice(id).subscribe({
+      next: () => {
+        alert('Invoice sent successfully');
+      },
+      error: () => {
+        alert('Invoice can only be sent for paid billing records');
+      }
+    });
+  }
+
   deleteBilling(id: string) {
 
     if (!confirm('Delete billing record?')) {

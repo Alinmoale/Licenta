@@ -23,6 +23,13 @@ export class BillingService {
   updateStatus(id: string, status: string) {
     return this.http.put(`${this.API}/${id}/status?status=${status}`, {});
   }
+  sendInvoice(id: string) {
+    return this.http.post(
+      `${this.API}/${id}/send-invoice`,
+      {},
+      { responseType: 'text' }
+    );
+  }
   deleteBilling(id: string) {
     return this.http.delete(`${this.API}/${id}`);
   }
