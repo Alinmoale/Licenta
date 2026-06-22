@@ -40,11 +40,31 @@ public class DoctorProfileController {
         Doctor doctor = doctorRepository.findById(doctorId)
                 .orElseThrow(() -> new RuntimeException("Doctor not found"));
 
+        String newEmail = updatedDoctor.getEmail();
+
+        if (newEmail == null || newEmail.isBlank()) {
+            throw new RuntimeException("Email is required");
+        }
+
+        User user = userRepository.findById(doctor.getUserId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        String normalizedEmail = newEmail.trim();
+
+        userRepository.findByEmail(normalizedEmail)
+                .filter(existingUser -> !existingUser.getId().equals(user.getId()))
+                .ifPresent(existingUser -> {
+                    throw new RuntimeException("Email already exists");
+                });
+
+        user.setEmail(normalizedEmail);
+        userRepository.save(user);
+
         Doctor newDoctor = new Doctor(
                 doctor.getUserId(),
                 updatedDoctor.getFirstName(),
                 updatedDoctor.getLastName(),
-                updatedDoctor.getEmail(),
+                normalizedEmail,
                 updatedDoctor.getPhone(),
                 updatedDoctor.getSpecialization()
         );

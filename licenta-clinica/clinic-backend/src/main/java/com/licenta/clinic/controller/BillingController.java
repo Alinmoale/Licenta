@@ -1,14 +1,18 @@
 package com.licenta.clinic.controller;
 
+import com.licenta.clinic.dto.BillingResponse;
 import com.licenta.clinic.model.Billing;
+import com.licenta.clinic.model.Consultation;
 import com.licenta.clinic.model.Doctor;
 import com.licenta.clinic.model.Patient;
 import com.licenta.clinic.repository.BillingRepository;
+import com.licenta.clinic.repository.ConsultationRepository;
 import com.licenta.clinic.repository.DoctorRepository;
 import com.licenta.clinic.repository.PatientRepository;
 import com.licenta.clinic.service.EmailService;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
@@ -20,17 +24,20 @@ public class BillingController {
     private final BillingRepository billingRepository;
     private final PatientRepository patientRepository;
     private final DoctorRepository doctorRepository;
+    private final ConsultationRepository consultationRepository;
     private final EmailService emailService;
 
     public BillingController(
             BillingRepository billingRepository,
             PatientRepository patientRepository,
             DoctorRepository doctorRepository,
+            ConsultationRepository consultationRepository,
             EmailService emailService
     ) {
         this.billingRepository = billingRepository;
         this.patientRepository = patientRepository;
         this.doctorRepository = doctorRepository;
+        this.consultationRepository = consultationRepository;
         this.emailService = emailService;
     }
 
@@ -41,18 +48,27 @@ public class BillingController {
     }
 
     @GetMapping
-    public List<Billing> getAll() {
-        return billingRepository.findAll();
+    public List<BillingResponse> getAll() {
+        return billingRepository.findAll()
+                .stream()
+                .map(this::toResponse)
+                .toList();
     }
 
     @GetMapping("/doctor/{doctorId}")
-    public List<Billing> getByDoctor(@PathVariable String doctorId) {
-        return billingRepository.findByDoctorId(doctorId);
+    public List<BillingResponse> getByDoctor(@PathVariable String doctorId) {
+        return billingRepository.findByDoctorId(doctorId)
+                .stream()
+                .map(this::toResponse)
+                .toList();
     }
 
     @GetMapping("/patient/{patientId}")
-    public List<Billing> getByPatient(@PathVariable String patientId) {
-        return billingRepository.findByPatientId(patientId);
+    public List<BillingResponse> getByPatient(@PathVariable String patientId) {
+        return billingRepository.findByPatientId(patientId)
+                .stream()
+                .map(this::toResponse)
+                .toList();
     }
 
     @GetMapping("/revenue")
@@ -114,6 +130,28 @@ public class BillingController {
         }
 
         return String.format(Locale.US, "%.2f", amount);
+    }
+
+    private BillingResponse toResponse(Billing billing) {
+        LocalDateTime consultationDate = null;
+
+        if (billing.getConsultationId() != null && !billing.getConsultationId().isBlank()) {
+            consultationDate = consultationRepository.findById(billing.getConsultationId())
+                    .map(Consultation::getCreatedAt)
+                    .orElse(null);
+        }
+
+        return new BillingResponse(
+                billing.getId(),
+                billing.getPatientId(),
+                billing.getDoctorId(),
+                billing.getConsultationId(),
+                consultationDate,
+                billing.getServiceName(),
+                billing.getPrice(),
+                billing.getStatus(),
+                billing.getCreatedAt()
+        );
     }
 
     @DeleteMapping("/{id}")
