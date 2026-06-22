@@ -35,6 +35,7 @@ export class Appointments implements OnInit {
   patients: any[] = [];
   openMenuId: string | null = null;
   today = new Date();
+  doctorFilterId = '';
 
 
   form = {
@@ -231,12 +232,26 @@ export class Appointments implements OnInit {
   }
 
   get paginatedAppointments() {
-  const start = (this.currentPage - 1) * this.itemsPerPage;
-  return this.appointments.slice(start, start + this.itemsPerPage);
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    return this.filteredAppointments.slice(start, start + this.itemsPerPage);
+  }
+
+  get filteredAppointments() {
+    if (!this.doctorFilterId) {
+      return this.appointments;
+    }
+
+    return this.appointments.filter(
+      appointment => appointment.doctorId === this.doctorFilterId
+    );
   }
 
   get totalPages() {
-    return Math.ceil(this.appointments.length / this.itemsPerPage);
+    return Math.ceil(this.filteredAppointments.length / this.itemsPerPage);
+  }
+
+  onDoctorFilterChange() {
+    this.currentPage = 1;
   }
 
   nextPage() {

@@ -96,17 +96,44 @@ p {
   cursor: pointer;
 }
 
-select,
+select {
+  width: 100%;
+  cursor: pointer;
+  padding: 13px 42px 13px 13px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #111827;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: white;
+  background-image: url('../../assets/arrow-right-bold.svg');
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 14px;
+}
+
 textarea {
+  width: 100%;
   padding: 13px;
   border: 1px solid #e5e7eb;
   border-radius: 10px;
   font-size: 14px;
+  color: #111827;
+  outline: none;
 }
 
 textarea {
   min-height: 90px;
   resize: vertical;
+}
+
+select:focus,
+textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
 }
 
 button {

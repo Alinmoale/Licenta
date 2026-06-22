@@ -121,6 +121,28 @@ textarea:focus {
   overflow-x: auto;
 }
 
+.table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.table-header h2 {
+  margin: 0;
+}
+
+.doctor-filter {
+  width: min(100%, 280px);
+  flex: 0 0 280px;
+}
+
+.empty-message {
+  margin: 18px 0 0;
+  color: #6b7280;
+}
+
 table {
   width: 100%;
   min-width: 850px;
@@ -391,7 +413,9 @@ button {
 }
 
 .status-select {
-  padding: 8px 12px;
+  min-width: 110px;
+  max-width: 130px;
+  padding: 8px 32px 8px 12px;
   border: none;
   border-radius: 999px;
   font-size: 12px;
@@ -433,6 +457,16 @@ button {
   .table-card {
     width: 100%;
     padding: 20px;
+  }
+
+  .table-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .doctor-filter {
+    flex-basis: auto;
+    width: 100%;
   }
 
   .time-grid {

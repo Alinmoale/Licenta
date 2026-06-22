@@ -89,7 +89,21 @@
         </section>
 
         <section class="table-card">
-          <h2>Appointment List</h2>
+          <div class="table-header">
+            <h2>Appointment List</h2>
+
+            <select
+              class="doctor-filter"
+              [(ngModel)]="doctorFilterId"
+              (change)="onDoctorFilterChange()"
+            >
+              <option value="">All doctors</option>
+              <option *ngFor="let doctor of doctors" [value]="doctor.id">
+                Dr. {{ doctor.firstName }} {{ doctor.lastName }}
+              </option>
+            </select>
+          </div>
+
           <table>
             <thead>
               <tr>
@@ -135,6 +149,11 @@
               </tr>
             </tbody>
           </table>
+
+          <p class="empty-message" *ngIf="filteredAppointments.length === 0">
+            No appointments found for this doctor.
+          </p>
+
           <div class="pagination" *ngIf="totalPages > 1">
             <button (click)="previousPage()" [disabled]="currentPage === 1">
                 Previous

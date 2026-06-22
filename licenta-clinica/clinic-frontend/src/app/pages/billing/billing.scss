@@ -75,22 +75,6 @@ p {
   background: #d1d5db;
   border-radius: 999px;
 }
-.status-select {
-  padding: 8px 12px;
-  border: none;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 700;
-  cursor: pointer;
-  background-image: url('../../assets/arrow-right-bold.svg');
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 12px;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
-
 .paid-select {
   background-color: #dcfce7;
   color: #166534;
@@ -161,6 +145,19 @@ select {
   background-size: 14px;
 }
 
+select.status-select {
+  width: auto;
+  min-width: 110px;
+  max-width: 130px;
+  padding: 8px 32px 8px 12px;
+  border: none;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  background-position: right 12px center;
+  background-size: 12px;
+}
+
 button {
   padding: 14px;
   border: none;
@@ -173,7 +170,7 @@ button {
 
 table {
   width: 100%;
-  min-width: 820px;
+  min-width: 960px;
   border-collapse: collapse;
 }
 
@@ -181,12 +178,29 @@ th {
   text-align: left;
   color: #6b7280;
   font-size: 14px;
-  padding-bottom: 14px;
+  padding: 0 12px 14px;
+  vertical-align: middle;
 }
 
 td {
   padding: 14px 12px;
   border-top: 1px solid #e5e7eb;
+  vertical-align: middle;
+}
+
+.price-col {
+  width: 110px;
+  white-space: nowrap;
+}
+
+.status-col {
+  width: 140px;
+  white-space: nowrap;
+}
+
+.actions-col {
+  width: 170px;
+  white-space: nowrap;
 }
 
 .status {

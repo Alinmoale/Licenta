@@ -79,6 +79,7 @@ export class DoctorProfile implements OnInit {
     this.doctorService.updateDoctorProfile(this.user.doctorId, this.profile).subscribe({
       next: () => {
         this.user.displayName = `Dr. ${this.profile.firstName} ${this.profile.lastName}`;
+        this.user.email = this.profile.email;
         localStorage.setItem('user', JSON.stringify(this.user));
         alert('Profile updated successfully');
       }

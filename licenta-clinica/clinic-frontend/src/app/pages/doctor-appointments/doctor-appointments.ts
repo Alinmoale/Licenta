@@ -40,6 +40,8 @@ export class DoctorAppointments implements OnInit {
   currentPage = 1;
   itemsPerPage = 10;
   today = new Date();
+  doctorUnavailableMessage = '';
+  errorMessage = '';
 
 
   form = {
@@ -79,19 +81,52 @@ export class DoctorAppointments implements OnInit {
     });
   }
 
+  onPatientChange(patientId: string) {
+    this.form.patientId = patientId;
+    this.availableTimes = [];
+    this.selectedTime = '';
+    this.form.startTime = '';
+    this.doctorUnavailableMessage = '';
+    this.errorMessage = '';
+
+    if (this.form.appointmentDate) {
+      this.loadAvailableTimes();
+    }
+  }
+
+  onDateChange(date: any) {
+    this.form.appointmentDate = date;
+    this.loadAvailableTimes();
+  }
+
   loadAvailableTimes() {
     this.availableTimes = [];
     this.selectedTime = '';
     this.form.startTime = '';
+    this.doctorUnavailableMessage = '';
+    this.errorMessage = '';
 
-    if (!this.form.appointmentDate) return;
+    if (!this.form.patientId || !this.form.appointmentDate) {
+      return;
+    }
 
     const formattedDate = this.formatDate(this.form.appointmentDate);
 
     this.appointmentService
       .getAvailableTimes(this.user.doctorId, formattedDate)
       .subscribe({
-        next: (data) => this.availableTimes = data
+        next: (data) => {
+          this.availableTimes = data;
+
+          if (data.length === 0) {
+            this.doctorUnavailableMessage =
+              'Doctor is unavailable on this date.';
+          }
+        },
+        error: (err) => {
+          this.errorMessage =
+            err.error?.message || 'Could not load available times';
+        }
       });
   }
 
@@ -101,8 +136,10 @@ export class DoctorAppointments implements OnInit {
   }
 
   saveAppointment() {
+    this.errorMessage = '';
+
     if (!this.form.patientId || !this.form.appointmentDate || !this.form.startTime) {
-      alert('All fields are required');
+      this.errorMessage = 'All fields are required';
       return;
     }
 
@@ -118,7 +155,10 @@ export class DoctorAppointments implements OnInit {
         this.loadAppointments();
         this.resetForm();
       },
-      error: () => alert('Doctor is not available at this time')
+      error: (err) => {
+        this.errorMessage =
+          err.error?.message || 'Doctor is not available at this time';
+      }
     });
   }
 
@@ -131,6 +171,8 @@ export class DoctorAppointments implements OnInit {
 
     this.availableTimes = [];
     this.selectedTime = '';
+    this.doctorUnavailableMessage = '';
+    this.errorMessage = '';
   }
 
   formatDate(date: any): string {

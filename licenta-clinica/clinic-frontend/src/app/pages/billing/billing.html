@@ -81,9 +81,10 @@
                   <th>Patient</th>
                   <th>Doctor</th>
                   <th>Service</th>
-                  <th>Price</th>
-                  <th>Status</th>
-                  <th>Actions</th>
+                  <th>Consultation Date</th>
+                  <th class="price-col">Price</th>
+                  <th class="status-col">Status</th>
+                  <th class="actions-col">Actions</th>
                 </tr>
               </thead>
 
@@ -92,9 +93,16 @@
                   <td>{{ getPatientName(billing.patientId) }}</td>
                   <td>{{ getDoctorName(billing.doctorId) }}</td>
                   <td>{{ billing.serviceName }}</td>
-                  <td>{{ billing.price | number:'1.0-0' }} RON</td>
-
                   <td>
+                    {{
+                      billing.consultationDate
+                        ? (billing.consultationDate | date:'dd/MM/yyyy HH:mm')
+                        : '-'
+                    }}
+                  </td>
+                  <td class="price-col">{{ billing.price | number:'1.0-0' }} RON</td>
+
+                  <td class="status-col">
                     <select
                       class="status-select"
                       [(ngModel)]="billing.status"
@@ -110,7 +118,7 @@
                       <option value="CANCELLED">CANCELLED</option>
                     </select>
                   </td>
-                  <td>
+                  <td class="actions-col">
                     <button
                       class="delete-btn"
                       (click)="deleteBilling(billing.id)"

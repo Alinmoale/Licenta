@@ -49,7 +49,14 @@ export class Billing implements OnInit {
 
   loadBilling() {
     this.billingService.getBilling().subscribe({
-      next: (data) => this.billings = data
+      next: (data) => {
+        this.billings = data.sort((a, b) => {
+          const dateA = new Date(a.createdAt).getTime();
+          const dateB = new Date(b.createdAt).getTime();
+
+          return dateB - dateA;
+        });
+      }
     });
   }
 
