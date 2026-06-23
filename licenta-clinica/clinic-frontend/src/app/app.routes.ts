@@ -21,6 +21,10 @@ export const routes: Routes = [
     path: '',
     component: Login
   },
+  {
+    path: 'login',
+    component: Login
+  },
 
   // ADMIN
   {

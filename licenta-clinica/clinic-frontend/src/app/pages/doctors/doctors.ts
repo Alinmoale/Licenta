@@ -112,7 +112,7 @@ export class Doctors implements OnInit {
   }
   isDoctorUnavailable(doctorId: string): boolean {
 
-    const today = new Date();
+    const today = this.formatDate(new Date());
 
     return this.unavailabilityList.some(item => {
 
@@ -120,12 +120,23 @@ export class Doctors implements OnInit {
         return false;
       }
 
-      const start = new Date(item.startDate);
-      const end = new Date(item.endDate);
+      const start = this.formatDate(item.startDate);
+      const end = this.formatDate(item.endDate);
 
       return today >= start && today <= end;
     });
   }
+
+  private formatDate(value: Date | string): string {
+    const date = value instanceof Date ? value : new Date(`${value}T00:00:00`);
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+  }
+
   getDoctorName(doctorId: string) {
   const doctor = this.doctors.find(d => d.id === doctorId);
 

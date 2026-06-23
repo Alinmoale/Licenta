@@ -132,6 +132,7 @@
                 <th>Time</th>
                 <th>Patient</th>
                 <th>Status</th>
+                <th>Actions</th>
               </tr>
             </thead>
 
@@ -168,6 +169,15 @@
                     <option value="CANCELLED">CANCELLED</option>
                   </select>
 
+                </td>
+
+                <td>
+                  <button
+                    class="delete-btn"
+                    (click)="deleteAppointment(appointment.id)"
+                  >
+                    Delete
+                  </button>
                 </td>
 
               </tr>

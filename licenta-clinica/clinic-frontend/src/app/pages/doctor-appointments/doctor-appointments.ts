@@ -197,6 +197,17 @@ export class DoctorAppointments implements OnInit {
     });
   }
 
+  deleteAppointment(id: string) {
+    if (confirm('Delete appointment?')) {
+      this.appointmentService.deleteAppointment(id).subscribe({
+        next: () => this.loadAppointments(),
+        error: () => {
+          this.errorMessage = 'Could not delete appointment';
+        }
+      });
+    }
+  }
+
   get scheduledCount() {
     return this.countAppointmentsByStatus('SCHEDULED');
   }

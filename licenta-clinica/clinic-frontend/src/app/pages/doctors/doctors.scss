@@ -126,6 +126,18 @@ td {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  max-height: 390px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.leave-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.leave-list::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 999px;
 }
 
 .leave-item {

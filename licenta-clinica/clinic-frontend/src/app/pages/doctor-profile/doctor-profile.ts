@@ -121,8 +121,8 @@ export class DoctorProfile implements OnInit {
 
     const payload = {
       doctorId: this.user.doctorId,
-      startDate: this.availabilityForm.startDate,
-      endDate: this.availabilityForm.endDate,
+      startDate: this.formatDate(this.availabilityForm.startDate),
+      endDate: this.formatDate(this.availabilityForm.endDate),
       reason: this.availabilityForm.reason
     };
 
@@ -184,6 +184,16 @@ export class DoctorProfile implements OnInit {
     normalizedDate.setHours(0, 0, 0, 0);
 
     return normalizedDate.getTime();
+  }
+
+  private formatDate(value: Date | string): string {
+    const date = value instanceof Date ? value : new Date(value);
+
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
   }
 
   deleteUnavailability(id: string) {
